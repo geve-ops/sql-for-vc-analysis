@@ -1,0 +1,12 @@
+-- 3.07 How old are the companies?
+--
+-- Question. companies.founded is messy text ("2021 (CB Insights, Endeavor...)", "2015 or 2019 (sources
+-- conflict)", "UNVERIFIED"). For each sector, how many companies have a founding year you can read,
+-- how many do not, and what is the average age in 2026?
+--
+-- Take the first four-digit number in the text as the year.
+--
+-- Return: category, with_year, unknown, avg_age_years (rounded to 1 decimal). Sort: category.
+--
+-- Hint: exercises/level3.md   Check: python check.py 3.07
+

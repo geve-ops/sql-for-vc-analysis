@@ -1,0 +1,11 @@
+-- 3.03 Fund footprint
+--
+-- Question. greek_funds holds several funds in one cell, for example Big Pi Ventures | Evercurious VC
+-- | Starttech Ventures. How many watchlist companies is each Greek fund linked to, and how many of
+-- those holdings are still current?
+--
+-- Return: fund, companies, current_holdings (where greek_fund_status = 'current'). Sort: companies
+-- highest first, then fund.
+--
+-- Hint: exercises/level3.md   Check: python check.py 3.03
+

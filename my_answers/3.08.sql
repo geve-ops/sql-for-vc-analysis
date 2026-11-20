@@ -1,0 +1,12 @@
+-- 3.08 Cheque sizes
+--
+-- Question. last_round_amount looks like USD 11.7M, EUR 1.55M, USD 700K or ~GBP 4M (~USD 5.3M). Take
+-- the first currency amount M/K match in each value. For USD and EUR rounds only, put each round into
+-- a size bucket and count:
+--
+-- 1: under 1M, 2: 1-5M, 3: 5-20M, 4: 20M+ (in millions of the stated currency).
+--
+-- Return: currency, size_bucket, rounds. Sort: currency, then bucket.
+--
+-- Hint: exercises/level3.md   Check: python check.py 3.08
+

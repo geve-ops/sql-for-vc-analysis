@@ -1,0 +1,20 @@
+-- 4.07 Capstone: rebuild the tracker's Top Movers in SQL
+--
+-- Question. The weekly digest opens with a Top Movers table, computed in Python (tracker/score.py).
+-- Rebuild it in pure SQL from scores:
+--
+-- - Momentum = this week's score + 0.5 × last week + 0.25 × two weeks ago + 0.125 × three weeks ago,
+-- using the 4 most recent runs. Round to 2 decimals.
+-- - This week = the score in the latest run. Last week = the score in the run before it.
+-- - Keep companies with momentum above 0.
+-- - Rank by momentum (highest first), then this week's score (highest first), then company name. Ties
+-- get different numbers.
+-- - Return the top 10.
+--
+-- Return: rank, company, momentum, week_score, last_week. Sort: rank.
+--
+-- Check your result against the table at the top of digests/2026-11-16.md in the tracker. The two
+-- should be identical.
+--
+-- Hint: exercises/level4.md   Check: python check.py 4.07
+

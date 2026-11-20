@@ -1,0 +1,4 @@
+dealflow.duckdb
+dealflow.duckdb.wal
+my_answers/.passed
+__pycache__/

@@ -1,0 +1,14 @@
+-- 3.01 Stage funnel
+--
+-- Question. The watchlist's stage column is free text ("Seed (registry label); DIANA grant", "Venture
+-- debt (after Series A)", ...). Put each company into a bucket and count them:
+--
+-- - Series B+: the text mentions series b, series c, late stage or growth
+-- - Series A: it mentions series a
+-- - Pre-seed / Seed: it mentions seed
+-- - Other: everything else
+--
+-- Return: stage_bucket, companies. Sort: companies highest first, then bucket.
+--
+-- Hint: exercises/level3.md   Check: python check.py 3.01
+

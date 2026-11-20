@@ -1,0 +1,11 @@
+-- 1.08 Does GitHub activity move before a round?
+--
+-- Question. In the backtest, group companies by what their commits did before the round (change: rose,
+-- fell, flat, no activity). How many companies are in each group, and what were the average commits in
+-- the baseline and pre-round windows?
+--
+-- Return: change, companies, avg_baseline, avg_before (averages rounded to 1 decimal). Sort: companies
+-- largest first, then change.
+--
+-- Hint: exercises/level1.md   Check: python check.py 1.08
+

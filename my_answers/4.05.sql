@@ -1,0 +1,10 @@
+-- 4.05 Share of hiring by sector
+--
+-- Question. In the 16 November 2026 snapshot, what share of all open job postings does each sector
+-- have?
+--
+-- Return: category, postings, pct_of_all (percent, rounded to 1 decimal). Sort: postings highest
+-- first, then category.
+--
+-- Hint: exercises/level4.md   Check: python check.py 4.05
+
