@@ -1,4 +1,6 @@
 -- check: ordered
+-- Approach: Total per company, RANK within each sector, keep rank 1.
+-- Watch out: RANK keeps ties (two leaders both show). ROW_NUMBER would silently drop one of them.
 WITH totals AS (
     SELECT w.category, w.company, sum(s.week_score) AS total_score
     FROM scores AS s

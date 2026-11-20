@@ -1,0 +1,9 @@
+-- 5.01 Find the duplicate rows
+--
+-- Question. Before counting anything, check the grain. In the 16 November 2026 snapshot, which job
+-- postings appear more than once in signals, and how many times?
+--
+-- Return: company, item_id, title, copies. Only postings with more than one row. Sort: copies highest
+-- first, then company, then item_id.
+--
+-- Hint: exercises/level5.md   Check: python check.py 5.01

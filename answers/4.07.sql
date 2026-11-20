@@ -1,4 +1,8 @@
 -- check: ordered
+-- Approach: Number the runs from the latest back, weight them 1, 0.5, 0.25, 0.125, sum per company, then
+--   rank.
+-- Watch out: No hard-coded dates: the query stays right when a new weekly run arrives. ROW_NUMBER because
+--   the digest gives tied companies different ranks.
 -- Momentum = this week's score + 0.5 x last week + 0.25 x two weeks ago + 0.125 x three weeks ago.
 WITH runs AS (
     SELECT date, DENSE_RANK() OVER (ORDER BY date DESC) AS weeks_back   -- 1 = latest run

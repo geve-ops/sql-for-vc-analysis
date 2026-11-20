@@ -1,4 +1,6 @@
 -- check: ordered
+-- Approach: sum() OVER (PARTITION BY company ORDER BY date) is a running total.
+-- Watch out: With ORDER BY inside OVER, the default frame runs from the first row to the current one.
 SELECT s.company, s.date, s.week_score,
        sum(s.week_score) OVER (PARTITION BY s.company_id ORDER BY s.date) AS running_total
 FROM scores AS s

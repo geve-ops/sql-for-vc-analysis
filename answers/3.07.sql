@@ -1,4 +1,6 @@
 -- check: ordered
+-- Approach: Extract the first four-digit number, TRY_CAST it, then aggregate per sector.
+-- Watch out: count(column) skips NULLs and count(*) does not, so their difference counts the unknowns.
 WITH years AS (
     SELECT category,
            TRY_CAST(regexp_extract(founded, '(\d{4})', 1) AS INTEGER) AS founded_year

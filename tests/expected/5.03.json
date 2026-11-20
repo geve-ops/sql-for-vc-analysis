@@ -1,0 +1,36 @@
+{
+ "columns": [
+  "amount_status",
+  "companies"
+ ],
+ "rows": [
+  [
+   "confirmed",
+   37.0
+  ],
+  [
+   "not_disclosed",
+   14.0
+  ],
+  [
+   "approximate",
+   5.0
+  ],
+  [
+   "exit",
+   5.0
+  ],
+  [
+   "unverified",
+   4.0
+  ],
+  [
+   "grant",
+   3.0
+  ],
+  [
+   "lower_bound",
+   1.0
+  ]
+ ]
+}

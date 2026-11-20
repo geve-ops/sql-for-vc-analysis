@@ -2,3 +2,4 @@ dealflow.duckdb
 dealflow.duckdb.wal
 my_answers/.passed
 __pycache__/
+.ruff_cache/

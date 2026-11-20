@@ -1,4 +1,7 @@
 -- check: ordered
+-- Approach: Two CTEs: fund holdings, and one total per company. Join them, then sum per fund.
+-- Watch out: Total the scores before joining. Joining first repeats each company once per weekly row and
+--   inflates the sums.
 WITH fund_companies AS (
     SELECT company_id, trim(unnest(string_split(greek_funds, '|'))) AS fund
     FROM watchlist

@@ -1,0 +1,9 @@
+-- 5.02 Opened and closed roles
+--
+-- Question. Between the 9 and 16 November 2026 snapshots, how many job postings did each company
+-- open (new this week) and close (gone this week)?
+--
+-- Return: company, opened, closed, net (opened minus closed). Only companies with at least one change.
+-- Sort: net highest first, then company.
+--
+-- Hint: exercises/level5.md   Check: python check.py 5.02

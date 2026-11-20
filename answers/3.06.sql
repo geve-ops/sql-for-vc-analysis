@@ -1,4 +1,7 @@
 -- check: ordered
+-- Approach: This week's postings that have no match last week: NOT EXISTS on company and item_id.
+-- Watch out: Match on item_id, not title. DISTINCT in the first CTE stops a multi-city posting from
+--   appearing several times.
 WITH this_week AS (
     SELECT DISTINCT company_id, item_id, title
     FROM signals

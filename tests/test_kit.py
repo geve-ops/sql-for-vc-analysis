@@ -57,9 +57,15 @@ class ReferenceAnswers(unittest.TestCase):
     def test_capstone_matches_the_published_digest(self):
         # Top movers table in vc-dealflow-tracker/digests/2026-11-16.md (rank, company, momentum, this week).
         digest = [
-            (1, "Axelera AI", 10, 6), (2, "Hack The Box", 8.75, 6), (3, "OQ Technology", 5.5, 0),
-            (4, "SolidKosmos", 4, 4), (5, "WeatherXM", 3.88, 2), (6, "Open Cosmos (Open Cosmos Aegean)", 3.75, 1),
-            (7, "Causaly", 2.75, 1), (8, "Bota Systems", 2.5, 0), (9, "TileDB (rebranded Tile.ai)", 2, 1),
+            (1, "Axelera AI", 10, 6),
+            (2, "Hack The Box", 8.75, 6),
+            (3, "OQ Technology", 5.5, 0),
+            (4, "SolidKosmos", 4, 4),
+            (5, "WeatherXM", 3.88, 2),
+            (6, "Open Cosmos (Open Cosmos Aegean)", 3.75, 1),
+            (7, "Causaly", 2.75, 1),
+            (8, "Bota Systems", 2.5, 0),
+            (9, "TileDB (rebranded Tile.ai)", 2, 1),
             (10, "Satori Analytics", 1.88, 1),
         ]
         latest = self.con.sql("SELECT max(date) FROM scores").fetchall()[0][0].isoformat()
@@ -72,8 +78,8 @@ class ReferenceAnswers(unittest.TestCase):
 
 
 class CheckerRules(unittest.TestCase):
-    cols = ["company", "score"]
-    rows = [("A", 3), ("B", 2.0), ("C", None)]
+    cols = ("company", "score")
+    rows = (("A", 3), ("B", 2.0), ("C", None))
 
     def diff(self, my_cols, my_rows, ordered=True):
         return check.difference(my_cols, my_rows, self.cols, self.rows, ordered)
@@ -99,7 +105,7 @@ class CheckerRules(unittest.TestCase):
         self.assertIn("expected 3 rows", self.diff(self.cols, self.rows[:2]))
 
     def test_extra_column_fails(self):
-        self.assertIn("expected 2 columns", self.diff(self.cols + ["x"], [r + (1,) for r in self.rows]))
+        self.assertIn("expected 2 columns", self.diff([*self.cols, "x"], [(*r, 1) for r in self.rows]))
 
     def test_null_is_not_zero(self):
         self.assertIsNotNone(self.diff(self.cols, [("A", 3), ("B", 2), ("C", 0)]))

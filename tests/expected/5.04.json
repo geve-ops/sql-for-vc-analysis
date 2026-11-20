@@ -1,0 +1,22 @@
+{
+ "columns": [
+  "project_id",
+  "acronym",
+  "companies",
+  "partners"
+ ],
+ "rows": [
+  [
+   "101092365",
+   "NETHELIX",
+   2.0,
+   "Altus LSA, Satways"
+  ],
+  [
+   "101168521",
+   "ForeSight",
+   2.0,
+   "Altus LSA, Satways"
+  ]
+ ]
+}

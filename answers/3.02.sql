@@ -1,4 +1,7 @@
 -- check: ordered
+-- Approach: Clean in a CTE (regex test, strptime to a DATE), then filter and compute months in the main
+--   query.
+-- Watch out: Rows like 'UNVERIFIED' or 'Not found' fail the regex and drop out; casting them would error.
 WITH rounds AS (
     SELECT company,
            strptime(left(last_round_date, 7), '%Y-%m')::DATE AS round_month

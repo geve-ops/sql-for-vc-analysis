@@ -1,0 +1,9 @@
+-- 5.04 One record, two companies
+--
+-- Question. In the 16 November 2026 snapshot, which CORDIS projects are linked to more than one
+-- watchlist company?
+--
+-- Return: project_id (the item_id), acronym, companies (how many), partners (company names,
+-- comma-separated, A to Z). Sort: project_id.
+--
+-- Hint: exercises/level5.md   Check: python check.py 5.04

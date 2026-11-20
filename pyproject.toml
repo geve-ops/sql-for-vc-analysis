@@ -1,0 +1,13 @@
+[project]
+name = "sql-learning-kit"
+version = "1.0.0"
+description = "SQL for VC analysis: a case study and graded exercises on Greek deep-tech deal-flow data"
+requires-python = ">=3.10"
+dependencies = ["duckdb==2.0.1", "matplotlib==3.11.2"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "PLW1510"]

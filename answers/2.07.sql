@@ -1,4 +1,7 @@
 -- check: ordered
+-- Approach: Filter grants in one snapshot, join for the sector, sum in millions.
+-- Watch out: eu_contribution is the whole project's EU budget, not the company's share. Two watchlist
+--   companies can share a project (see 5.04).
 SELECT w.category,
        count(*)                              AS grants,
        round(sum(s.eu_contribution) / 1e6, 2) AS eu_eur_m

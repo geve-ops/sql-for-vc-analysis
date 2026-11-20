@@ -1,4 +1,6 @@
 -- check: ordered
+-- Approach: sum(count(...)) OVER () is the grand total next to each group's count.
+-- Watch out: Multiply by 100.0, not 100, or integer division turns most shares into 0.
 SELECT w.category,
        count(DISTINCT s.item_id)                                                AS postings,
        round(100.0 * count(DISTINCT s.item_id) / sum(count(DISTINCT s.item_id)) OVER (), 1) AS pct_of_all

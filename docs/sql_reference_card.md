@@ -76,4 +76,15 @@ fn(...) OVER (PARTITION BY group_col ORDER BY order_col)
 | `sum(x) OVER ()` | Total over all rows. Use it for share of total. |
 | `QUALIFY rn = 1` | Filter on a window result. In other databases, wrap the query in a CTE. |
 
+## Data quality and modelling (level 5)
+
+| Task | Pattern |
+|---|---|
+| Find duplicates | `GROUP BY key_cols HAVING count(*) > 1` |
+| Compare two snapshots | `FULL OUTER JOIN` on the key; a `NULL` side means added or removed |
+| Classify free text | one `CASE`, most specific rule first, catch-all `ELSE` last |
+| Ordered list in one cell | `string_agg(name, ', ' ORDER BY name)` |
+| Gaps and islands | `ROW_NUMBER()` over all rows minus `ROW_NUMBER()` over the matching rows is constant within a streak |
+| Grain check | `count(*)` vs `count(DISTINCT key)`: if they differ, the table is not one row per key |
+
 More DuckDB syntax: [duckdb.org/docs/sql](https://duckdb.org/docs/sql/introduction).

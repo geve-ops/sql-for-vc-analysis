@@ -1,0 +1,46 @@
+{
+ "columns": [
+  "company",
+  "opened",
+  "closed",
+  "net"
+ ],
+ "rows": [
+  [
+   "Axelera AI",
+   3.0,
+   1.0,
+   2.0
+  ],
+  [
+   "Causaly",
+   1.0,
+   0.0,
+   1.0
+  ],
+  [
+   "Satori Analytics",
+   1.0,
+   1.0,
+   0.0
+  ],
+  [
+   "Delian Alliance Industries",
+   0.0,
+   1.0,
+   -1.0
+  ],
+  [
+   "Hack The Box",
+   3.0,
+   5.0,
+   -2.0
+  ],
+  [
+   "SquareDev",
+   0.0,
+   3.0,
+   -3.0
+  ]
+ ]
+}

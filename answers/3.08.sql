@@ -1,4 +1,8 @@
 -- check: ordered
+-- Approach: Anchor the regex with ^ so only values that start with a currency and amount qualify; bucket
+--   with CASE.
+-- Watch out: Without ^, 'Acquisition, enterprise value USD 110M' and 'UNVERIFIED (... USD 160K ...)' would
+--   be counted as rounds.
 WITH parsed AS (
     SELECT company,
            regexp_extract(last_round_amount, '^(USD|EUR) ([0-9.]+)([MK])', 1)                  AS currency,

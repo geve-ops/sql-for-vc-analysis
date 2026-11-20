@@ -64,11 +64,11 @@ def same(a, b):
 
 
 def rows_match(r1, r2):
-    return len(r1) == len(r2) and all(same(a, b) for a, b in zip(r1, r2))
+    return len(r1) == len(r2) and all(same(a, b) for a, b in zip(r1, r2, strict=False))
 
 
 def all_match(rows1, rows2):
-    return len(rows1) == len(rows2) and all(rows_match(a, b) for a, b in zip(rows1, rows2))
+    return len(rows1) == len(rows2) and all(rows_match(a, b) for a, b in zip(rows1, rows2, strict=False))
 
 
 def difference(my_cols, my_rows, ref_cols, ref_rows, ordered):
@@ -81,7 +81,7 @@ def difference(my_cols, my_rows, ref_cols, ref_rows, ordered):
         return f"expected {len(ref)} rows, you returned {len(mine)}."
     if not ordered:
         mine, ref = sorted(mine, key=sort_key), sorted(ref, key=sort_key)
-    for i, (a, b) in enumerate(zip(mine, ref), 1):
+    for i, (a, b) in enumerate(zip(mine, ref, strict=False), 1):
         if not rows_match(a, b):
             where = f"row {i}" if ordered else f"row {i} (after sorting both results)"
             msg = f"{where} differs.\n  yours:    {a}\n  expected: {b}"
@@ -94,7 +94,10 @@ def difference(my_cols, my_rows, ref_cols, ref_rows, ordered):
 def table(cols, rows, limit=SHOW_ROWS):
     shown = [[("NULL" if v is None else str(v)) for v in r] for r in rows[:limit]]
     widths = [min(40, max([len(str(c))] + [len(r[i]) for r in shown])) for i, c in enumerate(cols)]
-    fmt = lambda vals: "  ".join(str(v)[:40].ljust(w) for v, w in zip(vals, widths))
+
+    def fmt(vals):
+        return "  ".join(str(v)[:40].ljust(w) for v, w in zip(vals, widths, strict=False))
+
     out = [fmt(cols), fmt(["-" * w for w in widths])] + [fmt(r) for r in shown]
     if len(rows) > limit:
         out.append(f"... {len(rows) - limit} more rows ({len(rows)} in total)")
@@ -150,6 +153,14 @@ def compare(con, ex, quiet=False):
     if [c.lower() for c in my_cols] != [c.lower() for c in ref_cols]:
         note = f"\n  (Column names differ, which is fine. Reference names: {', '.join(ref_cols)})"
     print(f"PASS {ex}{note}")
+    lessons = []
+    for line in ref_sql.splitlines():
+        if line.startswith(("-- Approach:", "-- Watch out:")):
+            lessons.append(line[3:])
+        elif line.startswith("--   ") and lessons:
+            lessons[-1] += " " + line[5:]
+    if lessons:
+        print("\n  " + "\n  ".join(lessons) + f"\n  Reference answer: answers/{ex}.sql")
     with open(os.path.join(MINE, ".passed"), "a", encoding="utf-8") as f:
         f.write(ex + "\n")
     return True
@@ -178,7 +189,7 @@ def main():
 
     if args[0] == "--run":
         if len(args) < 2:
-            sys.exit("Usage: python check.py --run FILE.sql   or   python check.py --run \"SELECT ...\"")
+            sys.exit('Usage: python check.py --run FILE.sql   or   python check.py --run "SELECT ..."')
         sql = args[1]
         if os.path.exists(sql):
             with open(sql, encoding="utf-8") as f:
@@ -192,7 +203,10 @@ def main():
 
     if args[0] == "--list":
         passed_file = os.path.join(MINE, ".passed")
-        passed = set(open(passed_file, encoding="utf-8").read().split()) if os.path.exists(passed_file) else set()
+        passed = set()
+        if os.path.exists(passed_file):
+            with open(passed_file, encoding="utf-8") as f:
+                passed = set(f.read().split())
         names = titles()
         for ex in exercises():
             print(f"  [{'x' if ex in passed else ' '}] {ex}  {names.get(ex, '')}")

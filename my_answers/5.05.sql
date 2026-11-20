@@ -1,0 +1,8 @@
+-- 5.05 Longest scoring streak (gaps and islands)
+--
+-- Question. For each company, what is the longest run of consecutive weekly runs with a score above
+-- 0? Show companies whose longest streak is at least 2 runs.
+--
+-- Return: company, longest_streak. Sort: longest_streak highest first, then company.
+--
+-- Hint: exercises/level5.md   Check: python check.py 5.05

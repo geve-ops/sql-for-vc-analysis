@@ -1,6 +1,6 @@
 # Data dictionary
 
-The database has six tables, built by `build_db.py` from the CSV files in [data/](../data/). The data runs to the weekly run of 16 November 2026; [data/manifest.json](../data/manifest.json) records the source commits it was copied from.
+The database has two schemas, built by `build_db.py`. The `main` schema holds the six source tables, loaded as delivered from the CSV files in [data/](../data/); the exercises use these. The `analytics` schema holds cleaned models built from them by the SQL files in [models/](../models/); the case study uses these. [architecture.md](architecture.md) shows how the layers fit together. The data runs to the weekly run of 16 November 2026; [data/manifest.json](../data/manifest.json) records the source commits it was copied from.
 
 | Table | Rows | One row per | Source |
 |---|---:|---|---|
@@ -194,6 +194,91 @@ Did GitHub commits change in the months before a known round? One row per compan
 | `change` | VARCHAR | `rose`, `fell`, `flat` or `no activity`. |
 | `capped` | BOOLEAN | The commit count hit the API's page limit. |
 
+## Analytics models
+
+Built by [models/](../models/) in file order; each file creates one table in the `analytics` schema. Each model's grain is tested in [tests/data_quality/](../tests/data_quality/).
+
+### analytics.dim_company
+
+One row per market-map company (88).
+
+| Column | Type | Meaning |
+|---|---|---|
+| `company_id` | VARCHAR | Key. |
+| `company`, `sub_sector`, `map_status`, `hq_greek_link`, `website`, `verification_status`, `github_org`, `last_verified` | | As in `companies`. |
+| `sector` | VARCHAR | `companies.category`. |
+| `on_watchlist` | BOOLEAN | The company is on the tracker's watchlist (Include or Borderline). |
+| `founded_year` | INTEGER | First four-digit number in `founded`; NULL when there is none. |
+| `primary_source` | VARCHAR | First URL in `source_link`. |
+| `has_unverified_fact` | BOOLEAN | `verification_status` mentions UNVERIFIED. |
+| `jobs_source` | VARCHAR | From `watchlist`; NULL for companies off the watchlist. |
+| `greek_fund_status` | VARCHAR | `current`, `exited (...)`, or `none`. |
+
+### analytics.fct_last_round
+
+One row per market-map company (88): its last round, parsed. Nothing is estimated or converted.
+
+| Column | Type | Meaning |
+|---|---|---|
+| `company_id` | VARCHAR | Key. |
+| `amount_text`, `date_text` | VARCHAR | The source text, unchanged. |
+| `amount_status` | VARCHAR | `confirmed` (starts with USD/EUR/GBP and an exact amount), `approximate` (`~`), `lower_bound` ("More than"), `unverified`, `grant`, `exit`, or `not_disclosed`. Rules are tested in this order. |
+| `date_status` | VARCHAR | `confirmed` (starts with YYYY-MM), `unverified` (marked UNVERIFIED), or `missing`. |
+| `currency` | VARCHAR | USD, EUR or GBP; only for confirmed amounts. |
+| `amount_m` | DOUBLE | Amount in millions of `currency`; only for confirmed amounts. |
+| `round_month` | DATE | First day of the round's month, when a month can be read. |
+| `is_debt` | BOOLEAN | The amount text mentions debt. |
+| `is_usable` | BOOLEAN | Confirmed amount and confirmed date: the only rounds the case study counts. |
+| `source_url` | VARCHAR | First source link for the company. |
+
+### analytics.bridge_company_fund
+
+One row per company and Greek fund, from the multi-fund `watchlist.greek_funds` cell.
+
+| Column | Type | Meaning |
+|---|---|---|
+| `company_id` | VARCHAR | The company. |
+| `fund` | VARCHAR | One Greek fund, trimmed. |
+| `holding_status` | VARCHAR | `watchlist.greek_fund_status`. |
+| `is_current` | BOOLEAN | The holding is current. |
+| `is_target_fund` | BOOLEAN | The fund is in `analytics.ref_target_fund` ([seeds/target_fund.csv](../seeds/target_fund.csv)). |
+
+### analytics.fct_signal
+
+One row per item per snapshot (`snapshot_date`, `company_id`, `signal`, `item_id`). Same columns as `signals`, except that a job posting listed once per city becomes one row:
+
+| Column | Type | Meaning |
+|---|---|---|
+| `locations` | VARCHAR | The posting's distinct locations, `; `-separated. |
+| `listings` | BIGINT | How many rows `signals` had for the item (1 for everything but multi-city jobs). |
+
+### analytics.fct_weekly_score
+
+One row per weekly run and company. The columns of `scores` (with `date` renamed `run_date`), plus:
+
+| Column | Type | Meaning |
+|---|---|---|
+| `weeks_back` | BIGINT | 1 for the latest run, 2 for the one before, and so on. |
+| `momentum_weight` | DOUBLE | 1, 0.5, 0.25, 0.125 for the last four runs; 0 before that. |
+
+### analytics.company_momentum
+
+One row per watchlist company (69): the tracker's Top Movers ranking rebuilt in SQL.
+
+| Column | Type | Meaning |
+|---|---|---|
+| `company_id`, `company` | VARCHAR | The company. |
+| `momentum` | DOUBLE | Sum of `momentum_weight × week_score`, rounded to 2 decimals. |
+| `momentum_ex_funding` | DOUBLE | The same without funding-headline points. |
+| `this_week`, `last_week` | BIGINT | Week score in the latest run and the one before. |
+| `score_4_runs` | BIGINT | Total week score over the last four runs. |
+| `momentum_rank` | BIGINT | Rank by momentum, then this week's score, then name; NULL when momentum is 0. Matches the tracker's digest. |
+| `rank_ex_funding` | BIGINT | The same rank on `momentum_ex_funding`. |
+
+### analytics.ref_target_fund
+
+The funds the analysis is written for, from [seeds/target_fund.csv](../seeds/target_fund.csv): Big Pi Ventures, Marathon VC, Metavallon VC, Velocity Partners and egg (Eurobank).
+
 ## Limits of the data
 
 - **Small and recent.** 69 companies and four weekly runs. Enough to practise SQL and to describe this watchlist; not enough to show a trend or to test a model. The backtest has 15 rows.
@@ -205,5 +290,6 @@ Did GitHub commits change in the months before a known round? One row per compan
 - **Grants are matched by name.** CORDIS projects are found by searching for the company's name, so a false match is possible, and `eu_contribution` is the whole project's EU budget.
 - **Signals see only what is public.** 22 companies have a GitHub organisation and 38 a job board or careers page. A company with neither scores only through news, so a low score means "nothing visible", not "nothing happening".
 - **Keyword tagging.** `news_kind = 'funding'` is a keyword match. The case study shows that none of the six headlines that earned funding points in the four runs announced an actual round.
-- **Repeated job rows.** Workable lists a multi-city job once per city. The 16 November snapshot has 95 job rows but 74 distinct postings. The tracker's hiring points count each row as a new role, so a multi-city posting can earn more than one point (the cap of 5 per week limits the effect).
+- **Shared grant projects.** Two CORDIS projects (NETHELIX and ForeSight) are matched to both Altus LSA and Satways. Summing `eu_contribution` across companies counts them twice (exercise 5.04).
+- **Repeated job rows.** Job boards list a multi-city posting once per location, and sometimes repeat the same location (exercise 5.01). The 16 November snapshot has 95 job rows but 74 distinct postings; `analytics.fct_signal` keeps one row per posting. The scoring that produced this data counted each row as a new role, so a multi-city posting could earn more than one hiring point (the cap of 5 per week limits the effect).
 - **Snapshot dates.** `event_date` comes from the source; some job boards give none (NULL), and Google News dates can differ by a day from the outlet's own.

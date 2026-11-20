@@ -1,0 +1,15 @@
+-- 5.03 Classify free text into a clean status
+--
+-- Question. Turn watchlist.last_round_amount into a status and count the companies in each. Test
+-- the rules in this order and take the first that matches:
+--   exit           text starts with "acquisition", or stage starts with "exited"
+--   grant          text mentions "grant"
+--   unverified     text starts with "UNVERIFIED"
+--   approximate    text starts with ~
+--   lower_bound    text starts with "more than"
+--   confirmed      text starts with USD, EUR or GBP, a number and M or K
+--   not_disclosed  everything else
+--
+-- Return: amount_status, companies. Sort: companies highest first, then status.
+--
+-- Hint: exercises/level5.md   Check: python check.py 5.03

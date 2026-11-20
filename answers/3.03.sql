@@ -1,4 +1,6 @@
 -- check: ordered
+-- Approach: Split the multi-fund cell into rows with unnest(string_split()), trim, then count per fund.
+-- Watch out: Without trim(), ' Evercurious VC' and 'Evercurious VC' count as two funds.
 WITH fund_rows AS (
     SELECT company_id,
            greek_fund_status,

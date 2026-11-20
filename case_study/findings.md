@@ -1,0 +1,7 @@
+| Question | Finding |
+|---|---|
+| [Do the target funds co-invest?](case_study/README.md#2-which-greek-funds-lead-and-do-the-target-funds-co-invest) | Rarely. Big Pi, Marathon, Metavallon, Velocity and egg share {{fact:target_shared_companies}} company between them ({{fact:target_shared_names}}). Their Greek co-investors are smaller early-stage funds. |
+| [How is recent capital spread?](case_study/README.md#3-how-is-recent-capital-spread) | The median confirmed round since January 2025 is EUR {{cell:03_recent_rounds|currency=EUR|median_m}}M in euros and USD {{cell:03_recent_rounds|currency=USD|median_m}}M in dollars. One company, Open Cosmos, is {{cell:03_recent_rounds|currency=EUR|largest_pct_of_total}}% of the euro total. |
+| [Who brings in EU money?](case_study/README.md#4-who-brings-in-eu-research-money) | Of the five companies in the most CORDIS projects, {{fact:grant_top5_backed}} have a Greek fund investor: a sourcing list. |
+| [What drives momentum?](case_study/README.md#5-what-drives-week-over-week-momentum) | {{fact:funding_points}} of {{fact:total_points}} momentum points came from funding headlines that announced no round. Without them, the number {{cell:05c_momentum_check|company=OQ Technology|rank}} mover falls to number {{cell:05c_momentum_check|company=OQ Technology|rank_without_funding}}. |
+| [Who to call this month?](case_study/README.md#6-who-should-a-fund-call-this-month) | {{fact:window_companies}} companies are 15 to 24 months past their last round; {{fact:window_no_greek_fund}} of them have no Greek investor. |

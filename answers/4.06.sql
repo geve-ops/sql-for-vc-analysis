@@ -1,4 +1,6 @@
 -- check: ordered
+-- Approach: ROW_NUMBER per company by date descending, keep row 1: the top-1-per-group pattern.
+-- Watch out: Add a unique tie-breaker (item_id) or two headlines on the same day can swap between runs.
 WITH ranked AS (
     SELECT s.company_id, s.title, s.source, s.event_date,
            ROW_NUMBER() OVER (PARTITION BY s.company_id ORDER BY s.event_date DESC, s.item_id) AS rn

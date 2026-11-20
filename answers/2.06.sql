@@ -1,4 +1,7 @@
 -- check: ordered
+-- Approach: Anti-join with the date condition inside ON.
+-- Watch out: Putting the date filter in WHERE turns the LEFT JOIN back into an inner join and loses
+--   exactly the rows you want.
 SELECT w.company, w.category
 FROM watchlist AS w
 LEFT JOIN signals AS s
