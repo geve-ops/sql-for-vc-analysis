@@ -1,0 +1,54 @@
+{
+ "columns": [
+  "company",
+  "total_score",
+  "active_weeks"
+ ],
+ "rows": [
+  [
+   "Axelera AI",
+   21.0,
+   4.0
+  ],
+  [
+   "Hack The Box",
+   16.0,
+   4.0
+  ],
+  [
+   "Open Cosmos (Open Cosmos Aegean)",
+   12.0,
+   2.0
+  ],
+  [
+   "OQ Technology",
+   11.0,
+   1.0
+  ],
+  [
+   "WeatherXM",
+   9.0,
+   4.0
+  ],
+  [
+   "Causaly",
+   6.0,
+   3.0
+  ],
+  [
+   "Bota Systems",
+   5.0,
+   1.0
+  ],
+  [
+   "Brainomix",
+   5.0,
+   3.0
+  ],
+  [
+   "TileDB (rebranded Tile.ai)",
+   5.0,
+   4.0
+  ]
+ ]
+}

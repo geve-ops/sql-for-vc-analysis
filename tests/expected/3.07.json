@@ -1,0 +1,58 @@
+{
+ "columns": [
+  "category",
+  "with_year",
+  "unknown",
+  "avg_age_years"
+ ],
+ "rows": [
+  [
+   "AI & Machine Learning",
+   13.0,
+   6.0,
+   5.8
+  ],
+  [
+   "Energy & Climate Tech",
+   8.0,
+   1.0,
+   5.8
+  ],
+  [
+   "Health & Biotech",
+   14.0,
+   4.0,
+   8.4
+  ],
+  [
+   "Industrial & Manufacturing Tech",
+   6.0,
+   1.0,
+   10.5
+  ],
+  [
+   "Quantum & Advanced Computing",
+   3.0,
+   1.0,
+   3.3
+  ],
+  [
+   "Robotics & Drones",
+   13.0,
+   0.0,
+   8.3
+  ],
+  [
+   "Semiconductors & Hardware",
+   7.0,
+   0.0,
+   7.7
+  ],
+  [
+   "Space & Defense",
+   11.0,
+   0.0,
+   13.5
+  ]
+ ]
+}

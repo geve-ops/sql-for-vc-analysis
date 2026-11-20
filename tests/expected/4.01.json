@@ -1,0 +1,44 @@
+{
+ "columns": [
+  "category",
+  "company",
+  "total_score"
+ ],
+ "rows": [
+  [
+   "AI & Machine Learning",
+   "TileDB (rebranded Tile.ai)",
+   5.0
+  ],
+  [
+   "Energy & Climate Tech",
+   "WeatherXM",
+   9.0
+  ],
+  [
+   "Health & Biotech",
+   "Causaly",
+   6.0
+  ],
+  [
+   "Industrial & Manufacturing Tech",
+   "DeepSea Technologies",
+   1.0
+  ],
+  [
+   "Robotics & Drones",
+   "Bota Systems",
+   5.0
+  ],
+  [
+   "Semiconductors & Hardware",
+   "Axelera AI",
+   21.0
+  ],
+  [
+   "Space & Defense",
+   "Hack The Box",
+   16.0
+  ]
+ ]
+}

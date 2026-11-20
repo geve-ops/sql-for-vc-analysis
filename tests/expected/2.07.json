@@ -1,0 +1,44 @@
+{
+ "columns": [
+  "category",
+  "grants",
+  "eu_eur_m"
+ ],
+ "rows": [
+  [
+   "Semiconductors & Hardware",
+   15.0,
+   277.18
+  ],
+  [
+   "Industrial & Manufacturing Tech",
+   30.0,
+   148.85
+  ],
+  [
+   "Space & Defense",
+   30.0,
+   139.4
+  ],
+  [
+   "Robotics & Drones",
+   17.0,
+   109.04
+  ],
+  [
+   "AI & Machine Learning",
+   16.0,
+   100.99
+  ],
+  [
+   "Health & Biotech",
+   10.0,
+   44.68
+  ],
+  [
+   "Energy & Climate Tech",
+   2.0,
+   6.44
+  ]
+ ]
+}

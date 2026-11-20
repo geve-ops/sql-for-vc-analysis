@@ -1,0 +1,49 @@
+{
+ "columns": [
+  "company",
+  "pipeline_stage",
+  "total_score"
+ ],
+ "rows": [
+  [
+   "Satori Analytics",
+   "Track",
+   4.0
+  ],
+  [
+   "Corsmed",
+   "Track",
+   1.0
+  ],
+  [
+   "Achira AI",
+   "Track",
+   0.0
+  ],
+  [
+   "Anodyne Nanotech",
+   "Track",
+   0.0
+  ],
+  [
+   "Delian Alliance Industries",
+   "Track",
+   0.0
+  ],
+  [
+   "Intryc",
+   "Track",
+   0.0
+  ],
+  [
+   "Perceptual Robotics",
+   "Memo",
+   0.0
+  ],
+  [
+   "Proxy Foods AI",
+   "Track",
+   0.0
+  ]
+ ]
+}

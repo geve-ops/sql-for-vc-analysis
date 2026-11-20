@@ -1,8 +1,11 @@
 -- 3.08 Cheque sizes
 --
--- Question. last_round_amount looks like USD 11.7M, EUR 1.55M, USD 700K or ~GBP 4M (~USD 5.3M). Take
--- the first currency amount M/K match in each value. For USD and EUR rounds only, put each round into
--- a size bucket and count:
+-- Question. last_round_amount is free text: USD 11.7M, EUR 1.55M (USD 1.6M), ~GBP 4M (~USD 5.3M),
+-- UNVERIFIED (...), Acquisition, enterprise value USD 110M. Only some are a clean, confirmed round size.
+--
+-- Keep the values that START with USD or EUR, a number and M or K (so ~ approximations, UNVERIFIED
+-- figures, "More than ..." and acquisition prices are left out), and that do not mention a grant.
+-- Put each round into a size bucket and count:
 --
 -- 1: under 1M, 2: 1-5M, 3: 5-20M, 4: 20M+ (in millions of the stated currency).
 --

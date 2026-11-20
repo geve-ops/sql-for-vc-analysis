@@ -1,0 +1,166 @@
+{
+ "columns": [
+  "company",
+  "published",
+  "source",
+  "title"
+ ],
+ "rows": [
+  [
+   "Axelera AI",
+   "2026-11-12",
+   "ANTARA News",
+   "Indonesias Batang SEZ explores up to $56M tech deal with Axelera AI"
+  ],
+  [
+   "Aether Aeronautics",
+   "2026-11-10",
+   "BusinessNews",
+   "Διπλή διεθνής πιστοποίηση ISO για την Aether Aeronautics από την EUROCERT"
+  ],
+  [
+   "Hack The Box",
+   "2026-11-10",
+   "Morningstar",
+   "RemoteThreat and Hack The Box Partner to Advance Realistic Evaluation for Human-AI Cyber Operations"
+  ],
+  [
+   "Keragon",
+   "2026-11-10",
+   "Yahoo Finance",
+   "Keragon Accelerates Enterprise AI Transformation with Google Cloud's Gemini for Healthcare"
+  ],
+  [
+   "Open Cosmos (Open Cosmos Aegean)",
+   "2026-11-10",
+   "MEXICONOW",
+   "Open Cosmos Targets Mexico Space Sector"
+  ],
+  [
+   "Prisma Electronics",
+   "2026-11-10",
+   "καρφιτσα",
+   "Prisma Electronics: Από τον Έβρο σε τροχιά υψηλής τεχνολογίας"
+  ],
+  [
+   "Sotiria Technology",
+   "2026-11-04",
+   "Traders Union",
+   "SOTIRIA Technology και Naval Group υπογράφουν συνεργασία στην ναυτική άμυνα στο Παρίσι"
+  ],
+  [
+   "OQ Technology",
+   "2026-11-03",
+   "Yahoo Finance",
+   "Momentus Secures Contract to Host OQ Technology 5G Payload on Vigoride-9 Mission"
+  ],
+  [
+   "Brainomix",
+   "2026-11-02",
+   "Medtech Insight",
+   "Brainomix Builds The Evidence Case For Quantitative CT In Pulmonary Fibrosis"
+  ],
+  [
+   "Corsmed",
+   "2026-11-02",
+   "Imaging Technology News",
+   "Corsmed Now Offering Free Tier to MRI Simulator"
+  ],
+  [
+   "Terra Robotics",
+   "2026-11-02",
+   "Logistik Heute",
+   "Humanoid Robotics: ID Logistics and Terra Robotics Form Strategic Partnership"
+  ],
+  [
+   "DeepSea Technologies",
+   "2026-10-24",
+   "η ναυτεμπορικη",
+   "DeepSea Technologies: Νέος CEO ο Πάνος Τσώνης"
+  ],
+  [
+   "SAS Technology",
+   "2026-10-23",
+   "Raksha Anirveda",
+   "SAS Technology and AERTEC Solutions Showcased Joint Laser-Guided Loitering Munition Concept at AUSA 2026"
+  ],
+  [
+   "Mind The Hack",
+   "2026-10-09",
+   "ΣΕΒ σύνδεσμος επιχειρήσεων και βιομηχανιών",
+   "Mind The Hack: H μοναδική εταιρεία με έδρα την Ελλάδα στη λίστα Sifted 250 για το 2026"
+  ],
+  [
+   "Proxy Foods AI",
+   "2026-09-30",
+   "Business Wire",
+   "Proxy Foods AI Joins MISTA to Bring AI-Native Food and Beverage Development to the Leading Innovation Ecosystem"
+  ],
+  [
+   "Anacalypsis Therapeutics",
+   "2026-09-21",
+   "STARTUPPER",
+   "Anacalypsis Therapeutics: Pre-seed χρηματοδότηση από την Metavallon VC"
+  ],
+  [
+   "Satori Analytics",
+   "2026-09-17",
+   "newmoney",
+   "Τι είδαν Metlen και Motor Oil στις Joule και Satori Analytics"
+  ],
+  [
+   "Circuits Integrated Hellas",
+   "2026-09-16",
+   "STARTUPPER",
+   "H Circuits Integrated Hellas εξασφάλισε pre seed χρηματοδότηση από την Evercurious VC για το CI ONE"
+  ],
+  [
+   "TileDB (rebranded Tile.ai)",
+   "2026-09-16",
+   "citybiz",
+   "TileDB Rebrands as Tile.ai, Names George Llado CEO and Raises Strategic Funding"
+  ],
+  [
+   "Robenso",
+   "2026-09-06",
+   "newmoney",
+   "Robenso: Ισχυρή ανάπτυξη 5ετίας για τη startup που αξιοποιεί το ΑΙ στην ανακύκλωση"
+  ],
+  [
+   "MarineTraffic",
+   "2026-09-02",
+   "MEGA TV",
+   "Το MarineTraffic έβαλε το παράνομο πάρκο της Τουρκίας στους χάρτες του – Η προειδοποίηση Ερντογάν στην Ελλάδα"
+  ],
+  [
+   "Anodyne Nanotech",
+   "2026-06-25",
+   "Femtech Insider",
+   "Anodyne Nanotech Raises $12.6M to Advance Once-Weekly GLP-1 Patch Into Phase I"
+  ],
+  [
+   "Pallma AI",
+   "2026-01-28",
+   "Tech.eu",
+   "Pallma AI closes $1.6M pre-seed round for AI agent security"
+  ],
+  [
+   "Delian Alliance Industries",
+   "2025-08-18",
+   "Osborne Clarke",
+   "Osborne Clarke advises Delian Alliance Industries on $14m Series A investment"
+  ],
+  [
+   "Intelligencia",
+   "2025-06-12",
+   "Emerj Artificial Intelligence Research",
+   "AI for Drug Development and Portfolio Management – with Leaders from Intelligencia AI and Novartis"
+  ],
+  [
+   "Core Innovation and Technology",
+   "2025-02-12",
+   "citybiz",
+   "Core Innovation Joins $3 Million Seed Round for Reelist"
+  ]
+ ]
+}

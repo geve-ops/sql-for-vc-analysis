@@ -1,0 +1,202 @@
+{
+ "columns": [
+  "company",
+  "date",
+  "week_score",
+  "running_total"
+ ],
+ "rows": [
+  [
+   "Achira AI",
+   "2026-10-26",
+   0.0,
+   0.0
+  ],
+  [
+   "Achira AI",
+   "2026-11-02",
+   0.0,
+   0.0
+  ],
+  [
+   "Achira AI",
+   "2026-11-09",
+   0.0,
+   0.0
+  ],
+  [
+   "Achira AI",
+   "2026-11-16",
+   0.0,
+   0.0
+  ],
+  [
+   "Anodyne Nanotech",
+   "2026-10-26",
+   0.0,
+   0.0
+  ],
+  [
+   "Anodyne Nanotech",
+   "2026-11-02",
+   0.0,
+   0.0
+  ],
+  [
+   "Anodyne Nanotech",
+   "2026-11-09",
+   0.0,
+   0.0
+  ],
+  [
+   "Anodyne Nanotech",
+   "2026-11-16",
+   0.0,
+   0.0
+  ],
+  [
+   "Corsmed",
+   "2026-10-26",
+   0.0,
+   0.0
+  ],
+  [
+   "Corsmed",
+   "2026-11-02",
+   0.0,
+   0.0
+  ],
+  [
+   "Corsmed",
+   "2026-11-09",
+   1.0,
+   1.0
+  ],
+  [
+   "Corsmed",
+   "2026-11-16",
+   0.0,
+   1.0
+  ],
+  [
+   "Delian Alliance Industries",
+   "2026-10-26",
+   0.0,
+   0.0
+  ],
+  [
+   "Delian Alliance Industries",
+   "2026-11-02",
+   0.0,
+   0.0
+  ],
+  [
+   "Delian Alliance Industries",
+   "2026-11-09",
+   0.0,
+   0.0
+  ],
+  [
+   "Delian Alliance Industries",
+   "2026-11-16",
+   0.0,
+   0.0
+  ],
+  [
+   "Intryc",
+   "2026-10-26",
+   0.0,
+   0.0
+  ],
+  [
+   "Intryc",
+   "2026-11-02",
+   0.0,
+   0.0
+  ],
+  [
+   "Intryc",
+   "2026-11-09",
+   0.0,
+   0.0
+  ],
+  [
+   "Intryc",
+   "2026-11-16",
+   0.0,
+   0.0
+  ],
+  [
+   "Perceptual Robotics",
+   "2026-10-26",
+   0.0,
+   0.0
+  ],
+  [
+   "Perceptual Robotics",
+   "2026-11-02",
+   0.0,
+   0.0
+  ],
+  [
+   "Perceptual Robotics",
+   "2026-11-09",
+   0.0,
+   0.0
+  ],
+  [
+   "Perceptual Robotics",
+   "2026-11-16",
+   0.0,
+   0.0
+  ],
+  [
+   "Proxy Foods AI",
+   "2026-10-26",
+   0.0,
+   0.0
+  ],
+  [
+   "Proxy Foods AI",
+   "2026-11-02",
+   0.0,
+   0.0
+  ],
+  [
+   "Proxy Foods AI",
+   "2026-11-09",
+   0.0,
+   0.0
+  ],
+  [
+   "Proxy Foods AI",
+   "2026-11-16",
+   0.0,
+   0.0
+  ],
+  [
+   "Satori Analytics",
+   "2026-10-26",
+   1.0,
+   1.0
+  ],
+  [
+   "Satori Analytics",
+   "2026-11-02",
+   1.0,
+   2.0
+  ],
+  [
+   "Satori Analytics",
+   "2026-11-09",
+   1.0,
+   3.0
+  ],
+  [
+   "Satori Analytics",
+   "2026-11-16",
+   1.0,
+   4.0
+  ]
+ ]
+}

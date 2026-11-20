@@ -1,0 +1,48 @@
+{
+ "columns": [
+  "company",
+  "github_org"
+ ],
+ "rows": [
+  [
+   "Axelera AI",
+   "axelera-ai-hub"
+  ],
+  [
+   "Bitloops",
+   "bitloops"
+  ],
+  [
+   "Intryc",
+   "Intryc"
+  ],
+  [
+   "Keragon",
+   "KeragonHQ"
+  ],
+  [
+   "MarineTraffic",
+   "marinetraffic"
+  ],
+  [
+   "Open Cosmos (Open Cosmos Aegean)",
+   "opencosmos"
+  ],
+  [
+   "Satori Analytics",
+   "Satori-Analytics"
+  ],
+  [
+   "SolidKosmos",
+   "solidkosmos"
+  ],
+  [
+   "SquareDev",
+   "squaredev-io"
+  ],
+  [
+   "WeatherXM",
+   "WeatherXM"
+  ]
+ ]
+}

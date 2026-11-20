@@ -1,0 +1,67 @@
+{
+ "columns": [
+  "company",
+  "pipeline_stage",
+  "recommendation",
+  "category",
+  "stage"
+ ],
+ "rows": [
+  [
+   "Achira AI",
+   "Track",
+   "Track only",
+   "Health & Biotech",
+   "Seed"
+  ],
+  [
+   "Anodyne Nanotech",
+   "Track",
+   "Track",
+   "Health & Biotech",
+   "Series A"
+  ],
+  [
+   "Corsmed",
+   "Track",
+   "Confirm Greek link, then engage",
+   "Health & Biotech",
+   "Seed"
+  ],
+  [
+   "Delian Alliance Industries",
+   "Track",
+   "Engage",
+   "Space & Defense",
+   "Series A"
+  ],
+  [
+   "Intryc",
+   "Track",
+   "Engage",
+   "AI & Machine Learning",
+   "Seed"
+  ],
+  [
+   "Perceptual Robotics",
+   "Memo",
+   "Update memo",
+   "Robotics & Drones",
+   "Growth round (label disputed)"
+  ],
+  [
+   "Proxy Foods AI",
+   "Track",
+   "Track",
+   "AI & Machine Learning",
+   "Seed"
+  ],
+  [
+   "Satori Analytics",
+   "Track",
+   "Track",
+   "AI & Machine Learning",
+   "Strategic minority investment"
+  ]
+ ]
+}

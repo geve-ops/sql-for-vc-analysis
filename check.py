@@ -67,6 +67,30 @@ def rows_match(r1, r2):
     return len(r1) == len(r2) and all(same(a, b) for a, b in zip(r1, r2))
 
 
+def all_match(rows1, rows2):
+    return len(rows1) == len(rows2) and all(rows_match(a, b) for a, b in zip(rows1, rows2))
+
+
+def difference(my_cols, my_rows, ref_cols, ref_rows, ordered):
+    """None when the two results match under the checking rules, else what differs first."""
+    if len(my_cols) != len(ref_cols):
+        return f"expected {len(ref_cols)} columns ({', '.join(ref_cols)}), you returned {len(my_cols)}."
+    mine = [tuple(norm(v) for v in r) for r in my_rows]
+    ref = [tuple(norm(v) for v in r) for r in ref_rows]
+    if len(mine) != len(ref):
+        return f"expected {len(ref)} rows, you returned {len(mine)}."
+    if not ordered:
+        mine, ref = sorted(mine, key=sort_key), sorted(ref, key=sort_key)
+    for i, (a, b) in enumerate(zip(mine, ref), 1):
+        if not rows_match(a, b):
+            where = f"row {i}" if ordered else f"row {i} (after sorting both results)"
+            msg = f"{where} differs.\n  yours:    {a}\n  expected: {b}"
+            if ordered and all_match(sorted(mine, key=sort_key), sorted(ref, key=sort_key)):
+                msg += "\n  The rows are right but the order is not. Check your ORDER BY."
+            return msg
+    return None
+
+
 def table(cols, rows, limit=SHOW_ROWS):
     shown = [[("NULL" if v is None else str(v)) for v in r] for r in rows[:limit]]
     widths = [min(40, max([len(str(c))] + [len(r[i]) for r in shown])) for i, c in enumerate(cols)]
@@ -117,23 +141,10 @@ def compare(con, ex, quiet=False):
     if not quiet:
         print(f"Your result:\n{table(my_cols, my_rows)}\n")
 
-    if len(my_cols) != len(ref_cols):
-        print(f"NOT YET: expected {len(ref_cols)} columns ({', '.join(ref_cols)}), you returned {len(my_cols)}.")
+    problem = difference(my_cols, my_rows, ref_cols, ref_rows, ordered)
+    if problem:
+        print(f"NOT YET: {problem}")
         return False
-    mine = [tuple(norm(v) for v in r) for r in my_rows]
-    ref = [tuple(norm(v) for v in r) for r in ref_rows]
-    if len(mine) != len(ref):
-        print(f"NOT YET: expected {len(ref)} rows, you returned {len(mine)}.")
-        return False
-    if not ordered:
-        mine, ref = sorted(mine, key=sort_key), sorted(ref, key=sort_key)
-    for i, (a, b) in enumerate(zip(mine, ref), 1):
-        if not rows_match(a, b):
-            where = f"row {i}" if ordered else f"row {i} (after sorting both results)"
-            print(f"NOT YET: {where} differs.\n  yours:    {a}\n  expected: {b}")
-            if ordered and sorted(mine, key=sort_key) == sorted(ref, key=sort_key):
-                print("  The rows are right but the order is not. Check your ORDER BY.")
-            return False
 
     note = ""
     if [c.lower() for c in my_cols] != [c.lower() for c in ref_cols]:

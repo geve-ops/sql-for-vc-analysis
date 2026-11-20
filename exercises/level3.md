@@ -24,7 +24,7 @@ A CTE (`WITH name AS (...)`) is a named step. It lets you write a query top to b
 
 ### 3.02 The raising window
 
-**Question.** Seed and Series A companies usually raise again 15 to 24 months after their last round. Which watchlist companies are inside that window on 16 November 2026?
+**Question.** Early-stage companies often raise again 15 to 24 months after their last round. Which watchlist companies (any stage) had their last round 15 to 24 months before 16 November 2026?
 
 `last_round_date` is text: some values are `2026-06-24`, some are `2026-07`, and some are `UNVERIFIED` or `Not found`. Use only the rows that start with a year and a month, and take that month.
 
@@ -69,26 +69,26 @@ Use two CTEs. In the first, split the funds as in 3.03, keeping only `greek_fund
 
 ### 3.05 Fresh roles or stale listings?
 
-**Question.** A company with many job posts may just have old listings it never took down. In the 16 November 2026 snapshot, how many of each company's postings were published in the 30 days before the snapshot, and how many are older?
+**Question.** A company with many job posts may just have old listings it never took down. In the 16 November 2026 snapshot, how many of each company's postings were published in the 30 days before the snapshot, and how many are older? Count each posting once (distinct `item_id`, as in 2.05).
 
 **Return:** `company`, `fresh_30d`, `older`, `total`. **Sort:** `fresh_30d` highest first, then company.
 
 <details><summary>Hint</summary>
 
-`sum(CASE WHEN event_date >= snapshot_date - INTERVAL 30 DAY THEN 1 ELSE 0 END)`. Some boards give no publish date (`event_date` is NULL). Those rows count in `total` but in neither `fresh_30d` nor `older`. Look at Corsmed and Intryc in the result.
+`count(DISTINCT item_id) FILTER (WHERE event_date >= snapshot_date - INTERVAL 30 DAY)`. The `FILTER` clause works with `DISTINCT` too. Some boards give no publish date (`event_date` is NULL). Those rows count in `total` but in neither `fresh_30d` nor `older`. Look at Corsmed and Intryc in the result.
 </details>
 
 ---
 
 ### 3.06 New roles this week
 
-**Question.** Which job postings are in the 16 November 2026 snapshot but were not in the 9 November one?
+**Question.** Which job postings are in the 16 November 2026 snapshot but were not in the 9 November one? One row per posting.
 
-**Return:** `company`, `title`. **Sort:** company, then title.
+**Return:** `company`, `item_id`, `title`. **Sort:** company, then title, then `item_id`.
 
 <details><summary>Hint</summary>
 
-Make one CTE for this week's jobs and one for last week's. Keep the rows of this week where `NOT EXISTS (SELECT 1 FROM last_week AS l WHERE l.company_id = t.company_id AND l.item_id = t.item_id)`. Match on `item_id`, not on `title`: Hack The Box has several postings with the same title.
+Make one CTE for this week's jobs and one for last week's. Keep the rows of this week where `NOT EXISTS (SELECT 1 FROM last_week AS l WHERE l.company_id = t.company_id AND l.item_id = t.item_id)`. Match on `item_id`, not on `title`: two different postings can share a title. Use `SELECT DISTINCT` in the first CTE so a posting listed in several cities gives one row.
 </details>
 
 ---
@@ -110,7 +110,9 @@ Take the first four-digit number in the text as the year.
 
 ### 3.08 Cheque sizes
 
-**Question.** `last_round_amount` looks like `USD 11.7M`, `EUR 1.55M`, `USD 700K` or `~GBP 4M (~USD 5.3M)`. Take the first `currency amount M/K` match in each value. For USD and EUR rounds only, put each round into a size bucket and count:
+**Question.** `last_round_amount` is free text: `USD 11.7M`, `EUR 1.55M (USD 1.6M)`, `~GBP 4M (~USD 5.3M)`, `UNVERIFIED (an aggregator lists USD 160K total; ...)`, `Acquisition, enterprise value USD 110M`. Only some of these are a clean, confirmed round size.
+
+Keep the values that **start** with `USD` or `EUR`, a number and `M` or `K` (so `~` approximations, `UNVERIFIED` figures, `More than ...` and acquisition prices are left out), and that do not mention a `grant`. Put each of those rounds into a size bucket and count:
 
 `1: under 1M`, `2: 1-5M`, `3: 5-20M`, `4: 20M+` (in millions of the stated currency).
 
@@ -118,5 +120,7 @@ Take the first four-digit number in the text as the year.
 
 <details><summary>Hint</summary>
 
-`regexp_extract(last_round_amount, '(USD|EUR|GBP) ([0-9.]+)([MK])', 2)` returns the number, and group 1 and group 3 return the currency and unit. Divide K values by 1000. Starting each bucket name with a number makes them sort in size order.
+`regexp_extract(last_round_amount, '^(USD|EUR) ([0-9.]+)([MK])', 2)` returns the number, and groups 1 and 3 return the currency and the unit. The `^` ties the match to the start of the text. Values that do not match give an empty string for the currency, so `WHERE currency IN ('USD', 'EUR')` drops them. Divide K values by 1000. Starting each bucket name with a number makes the buckets sort in size order.
+
+Do not convert EUR to USD with a rate you pick yourself. The two currencies stay separate.
 </details>

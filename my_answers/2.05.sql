@@ -2,7 +2,9 @@
 --
 -- Question. In the latest weekly snapshot, how many open job postings does each company have?
 --
+-- Count postings, not rows: a job board lists a job open in several cities once per city, and each
+-- copy has the same item_id. Hack The Box's "Senior Product Manager" appears six times.
+--
 -- Return: company, category, open_roles. Sort: open_roles highest first, then company.
 --
 -- Hint: exercises/level2.md   Check: python check.py 2.05
-

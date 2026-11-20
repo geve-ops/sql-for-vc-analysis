@@ -1,0 +1,70 @@
+{
+ "columns": [
+  "company",
+  "fresh_30d",
+  "older",
+  "total"
+ ],
+ "rows": [
+  [
+   "Bota Systems",
+   9.0,
+   0.0,
+   9.0
+  ],
+  [
+   "Axelera AI",
+   7.0,
+   5.0,
+   12.0
+  ],
+  [
+   "Hack The Box",
+   7.0,
+   8.0,
+   15.0
+  ],
+  [
+   "Causaly",
+   4.0,
+   6.0,
+   10.0
+  ],
+  [
+   "Satori Analytics",
+   2.0,
+   8.0,
+   10.0
+  ],
+  [
+   "Achira AI",
+   0.0,
+   7.0,
+   7.0
+  ],
+  [
+   "Corsmed",
+   0.0,
+   0.0,
+   3.0
+  ],
+  [
+   "DeepSea Technologies",
+   0.0,
+   1.0,
+   1.0
+  ],
+  [
+   "Delian Alliance Industries",
+   0.0,
+   2.0,
+   2.0
+  ],
+  [
+   "Intryc",
+   0.0,
+   0.0,
+   5.0
+  ]
+ ]
+}

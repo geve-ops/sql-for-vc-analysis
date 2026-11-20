@@ -1,10 +1,11 @@
 -- check: ordered
 WITH parsed AS (
     SELECT company,
-           regexp_extract(last_round_amount, '(USD|EUR|GBP) ([0-9.]+)([MK])', 1) AS currency,
-           TRY_CAST(regexp_extract(last_round_amount, '(USD|EUR|GBP) ([0-9.]+)([MK])', 2) AS DOUBLE) AS amount,
-           regexp_extract(last_round_amount, '(USD|EUR|GBP) ([0-9.]+)([MK])', 3) AS unit
+           regexp_extract(last_round_amount, '^(USD|EUR) ([0-9.]+)([MK])', 1)                  AS currency,
+           TRY_CAST(regexp_extract(last_round_amount, '^(USD|EUR) ([0-9.]+)([MK])', 2) AS DOUBLE) AS amount,
+           regexp_extract(last_round_amount, '^(USD|EUR) ([0-9.]+)([MK])', 3)                  AS unit
     FROM watchlist
+    WHERE last_round_amount NOT ILIKE '%grant%'
 ),
 in_millions AS (
     SELECT company, currency,

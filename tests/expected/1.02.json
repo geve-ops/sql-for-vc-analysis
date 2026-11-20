@@ -1,0 +1,24 @@
+{
+ "columns": [
+  "map_status",
+  "n"
+ ],
+ "rows": [
+  [
+   "Include",
+   36.0
+  ],
+  [
+   "Borderline",
+   33.0
+  ],
+  [
+   "Exclude",
+   17.0
+  ],
+  [
+   "Hold",
+   2.0
+  ]
+ ]
+}

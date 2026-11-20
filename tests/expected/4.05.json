@@ -1,0 +1,39 @@
+{
+ "columns": [
+  "category",
+  "postings",
+  "pct_of_all"
+ ],
+ "rows": [
+  [
+   "Health & Biotech",
+   20.0,
+   27.0
+  ],
+  [
+   "Space & Defense",
+   17.0,
+   23.0
+  ],
+  [
+   "AI & Machine Learning",
+   15.0,
+   20.3
+  ],
+  [
+   "Semiconductors & Hardware",
+   12.0,
+   16.2
+  ],
+  [
+   "Robotics & Drones",
+   9.0,
+   12.2
+  ],
+  [
+   "Industrial & Manufacturing Tech",
+   1.0,
+   1.4
+  ]
+ ]
+}

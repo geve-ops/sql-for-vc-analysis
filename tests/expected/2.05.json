@@ -1,0 +1,59 @@
+{
+ "columns": [
+  "company",
+  "category",
+  "open_roles"
+ ],
+ "rows": [
+  [
+   "Hack The Box",
+   "Space & Defense",
+   15.0
+  ],
+  [
+   "Axelera AI",
+   "Semiconductors & Hardware",
+   12.0
+  ],
+  [
+   "Causaly",
+   "Health & Biotech",
+   10.0
+  ],
+  [
+   "Satori Analytics",
+   "AI & Machine Learning",
+   10.0
+  ],
+  [
+   "Bota Systems",
+   "Robotics & Drones",
+   9.0
+  ],
+  [
+   "Achira AI",
+   "Health & Biotech",
+   7.0
+  ],
+  [
+   "Intryc",
+   "AI & Machine Learning",
+   5.0
+  ],
+  [
+   "Corsmed",
+   "Health & Biotech",
+   3.0
+  ],
+  [
+   "Delian Alliance Industries",
+   "Space & Defense",
+   2.0
+  ],
+  [
+   "DeepSea Technologies",
+   "Industrial & Manufacturing Tech",
+   1.0
+  ]
+ ]
+}

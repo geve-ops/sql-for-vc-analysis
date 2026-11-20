@@ -1,0 +1,74 @@
+{
+ "columns": [
+  "company",
+  "sub_sector",
+  "stage"
+ ],
+ "rows": [
+  [
+   "Acumino",
+   "Physical AI / robot intelligence",
+   "Seed"
+  ],
+  [
+   "Aether Aeronautics",
+   "Target drones",
+   "Strategic investment (EFA Group)"
+  ],
+  [
+   "Altus LSA",
+   "Defense UAVs",
+   "Established SME; strategic partner Shield AI (2026)"
+  ],
+  [
+   "Augmenta",
+   "Agri-robotics / precision ag",
+   "Exited (acquired by CNH Industrial)"
+  ],
+  [
+   "Bota Systems",
+   "Robot sensors",
+   "Seed"
+  ],
+  [
+   "Gizelis Robotics",
+   "Industrial robot integration",
+   "Corporate-backed (parent group); no external round found"
+  ],
+  [
+   "Perceptual Robotics",
+   "Inspection drones",
+   "Growth round (label disputed)"
+  ],
+  [
+   "Progressive Robotics",
+   "Industrial robot software",
+   "Seed"
+  ],
+  [
+   "Robenso",
+   "Recycling robotics",
+   "Seed"
+  ],
+  [
+   "SAS Technology",
+   "Heavy multirotor UAVs",
+   "Group-owned SME; no external round found"
+  ],
+  [
+   "Terra Robotics",
+   "Agri-robotics (laser weeding)",
+   "Seed"
+  ],
+  [
+   "Ucandrone",
+   "UAS (mapping, surveillance, defense)",
+   "Strategic investment (EFA Group)"
+  ],
+  [
+   "Velos Rotors",
+   "Unmanned helicopters",
+   "Seed"
+  ]
+ ]
+}

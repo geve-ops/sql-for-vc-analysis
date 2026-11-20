@@ -1,0 +1,81 @@
+{
+ "columns": [
+  "rank",
+  "company",
+  "momentum",
+  "week_score",
+  "last_week"
+ ],
+ "rows": [
+  [
+   1.0,
+   "Axelera AI",
+   10.0,
+   6.0,
+   3.0
+  ],
+  [
+   2.0,
+   "Hack The Box",
+   8.75,
+   6.0,
+   2.0
+  ],
+  [
+   3.0,
+   "OQ Technology",
+   5.5,
+   0.0,
+   11.0
+  ],
+  [
+   4.0,
+   "SolidKosmos",
+   4.0,
+   4.0,
+   0.0
+  ],
+  [
+   5.0,
+   "WeatherXM",
+   3.88,
+   2.0,
+   2.0
+  ],
+  [
+   6.0,
+   "Open Cosmos (Open Cosmos Aegean)",
+   3.75,
+   1.0,
+   0.0
+  ],
+  [
+   7.0,
+   "Causaly",
+   2.75,
+   1.0,
+   2.0
+  ],
+  [
+   8.0,
+   "Bota Systems",
+   2.5,
+   0.0,
+   5.0
+  ],
+  [
+   9.0,
+   "TileDB (rebranded Tile.ai)",
+   2.0,
+   1.0,
+   1.0
+  ],
+  [
+   10.0,
+   "Satori Analytics",
+   1.88,
+   1.0,
+   1.0
+  ]
+ ]
+}

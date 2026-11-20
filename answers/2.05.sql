@@ -1,5 +1,5 @@
 -- check: ordered
-SELECT w.company, w.category, count(*) AS open_roles
+SELECT w.company, w.category, count(DISTINCT s.item_id) AS open_roles
 FROM signals AS s
 JOIN watchlist AS w ON w.company_id = s.company_id
 WHERE s.signal = 'job'

@@ -1,0 +1,88 @@
+{
+ "columns": [
+  "company",
+  "verification_status"
+ ],
+ "rows": [
+  [
+   "Achira AI",
+   "Round verified; HQ and Greek presence UNVERIFIED"
+  ],
+  [
+   "Acumino",
+   "Round verified; lead = Radar Ventures per company post and Caplight; HQ UNVERIFIED"
+  ],
+  [
+   "Anacalypsis Therapeutics",
+   "Amount and date UNVERIFIED (aggregators only)"
+  ],
+  [
+   "Anodyne Nanotech",
+   "Round verified; Greek presence UNVERIFIED"
+  ],
+  [
+   "Better Origin",
+   "Verified (2022 data, later rounds UNVERIFIED)"
+  ],
+  [
+   "Brainomix",
+   "Round and investors verified (company release 2025-03-18); Greek office UNVERIFIED"
+  ],
+  [
+   "Causaly",
+   "Round verified; HQ and Greek presence UNVERIFIED"
+  ],
+  [
+   "Centaur Analytics",
+   "Rounds verified; dates and later funding UNVERIFIED"
+  ],
+  [
+   "Core Innovation and Technology",
+   "Existence verified; funding figure UNVERIFIED"
+  ],
+  [
+   "Corsmed",
+   "Round verified; Greek founders UNVERIFIED"
+  ],
+  [
+   "DeepSea Technologies",
+   "Verified (2021 data, later rounds UNVERIFIED)"
+  ],
+  [
+   "Hoplon AI",
+   "Round verified (aggregators); Greek team presence UNVERIFIED"
+  ],
+  [
+   "Intelligencia",
+   "Verified (MobiHealthNews, 2021-08-19, read in a browser; later rounds UNVERIFIED)"
+  ],
+  [
+   "Navenio",
+   "Greek founder verified; round date and investors UNVERIFIED"
+  ],
+  [
+   "Neurohive",
+   "Genesis portfolio listing verified; amount UNVERIFIED"
+  ],
+  [
+   "Pinepeak",
+   "Genesis portfolio listing and Greek founders (one article) found; amount UNVERIFIED"
+  ],
+  [
+   "Pleioflow",
+   "Greek subsidiary and Genesis portfolio listing verified; amount UNVERIFIED"
+  ],
+  [
+   "Robenso",
+   "Verified round; date and website UNVERIFIED"
+  ],
+  [
+   "Satori Analytics",
+   "Existence verified; amount and round label UNVERIFIED"
+  ],
+  [
+   "iCOMAT",
+   "Verified; Greek team presence UNVERIFIED"
+  ]
+ ]
+}

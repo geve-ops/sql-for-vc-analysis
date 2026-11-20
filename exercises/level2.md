@@ -62,11 +62,15 @@ Join `backtest` to `companies` on `company_id`, and filter `change = 'rose'`.
 
 **Question.** In the latest weekly snapshot, how many open job postings does each company have?
 
+Count postings, not rows: a job board lists a job open in several cities once per city, and each copy has the same `item_id`. Hack The Box's "Senior Product Manager" appears six times.
+
 **Return:** `company`, `category`, `open_roles`. **Sort:** `open_roles` highest first, then company.
 
 <details><summary>Hint</summary>
 
 Job postings are the rows in `signals` with `signal = 'job'`. Every snapshot lists every posting that is still open, so filter to one `snapshot_date`. To avoid typing the date, use a subquery: `snapshot_date = (SELECT max(snapshot_date) FROM signals)`.
+
+`count(*)` counts rows. `count(DISTINCT s.item_id)` counts different postings. Run both and compare the Hack The Box row.
 </details>
 
 ---

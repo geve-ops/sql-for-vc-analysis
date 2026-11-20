@@ -1,0 +1,104 @@
+{
+ "columns": [
+  "company",
+  "category",
+  "map_status"
+ ],
+ "rows": [
+  [
+   "Astrato Analytics",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "Averywell",
+   "Health & Biotech",
+   "Exclude"
+  ],
+  [
+   "Butler POS",
+   "Industrial & Manufacturing Tech",
+   "Exclude"
+  ],
+  [
+   "Caristo Diagnostics",
+   "Health & Biotech",
+   "Exclude"
+  ],
+  [
+   "Dataphoria",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "Edra",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "Electryone AI",
+   "Energy & Climate Tech",
+   "Exclude"
+  ],
+  [
+   "Juisci",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "Krotos",
+   "Industrial & Manufacturing Tech",
+   "Exclude"
+  ],
+  [
+   "Mobito",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "NOFire AI",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "NeuroVirt",
+   "Health & Biotech",
+   "Exclude"
+  ],
+  [
+   "Nutropy",
+   "Health & Biotech",
+   "Exclude"
+  ],
+  [
+   "PiDust",
+   "Quantum & Advanced Computing",
+   "Hold"
+  ],
+  [
+   "PolyModels Hub",
+   "Health & Biotech",
+   "Exclude"
+  ],
+  [
+   "QUBITECH",
+   "Quantum & Advanced Computing",
+   "Hold"
+  ],
+  [
+   "StiQ",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "Straion",
+   "AI & Machine Learning",
+   "Exclude"
+  ],
+  [
+   "Xatoms",
+   "Quantum & Advanced Computing",
+   "Exclude"
+  ]
+ ]
+}

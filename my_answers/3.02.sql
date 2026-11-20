@@ -1,7 +1,7 @@
 -- 3.02 The raising window
 --
--- Question. Seed and Series A companies usually raise again 15 to 24 months after their last round.
--- Which watchlist companies are inside that window on 16 November 2026?
+-- Question. Early-stage companies often raise again 15 to 24 months after their last round. Which
+-- watchlist companies (any stage) had their last round 15 to 24 months before 16 November 2026?
 --
 -- last_round_date is text: some values are 2026-06-24, some are 2026-07, and some are UNVERIFIED or
 -- Not found. Use only the rows that start with a year and a month, and take that month.

@@ -1,0 +1,100 @@
+{
+ "columns": [
+  "company",
+  "week_score",
+  "prev_week",
+  "change"
+ ],
+ "rows": [
+  [
+   "Hack The Box",
+   6.0,
+   2.0,
+   4.0
+  ],
+  [
+   "SolidKosmos",
+   4.0,
+   0.0,
+   4.0
+  ],
+  [
+   "Axelera AI",
+   6.0,
+   3.0,
+   3.0
+  ],
+  [
+   "Aether Aeronautics",
+   1.0,
+   0.0,
+   1.0
+  ],
+  [
+   "Keragon",
+   1.0,
+   0.0,
+   1.0
+  ],
+  [
+   "Moveo.AI",
+   1.0,
+   0.0,
+   1.0
+  ],
+  [
+   "Open Cosmos (Open Cosmos Aegean)",
+   1.0,
+   0.0,
+   1.0
+  ],
+  [
+   "Prisma Electronics",
+   1.0,
+   0.0,
+   1.0
+  ],
+  [
+   "Brainomix",
+   0.0,
+   1.0,
+   -1.0
+  ],
+  [
+   "Causaly",
+   1.0,
+   2.0,
+   -1.0
+  ],
+  [
+   "Corsmed",
+   0.0,
+   1.0,
+   -1.0
+  ],
+  [
+   "Velos Rotors",
+   0.0,
+   1.0,
+   -1.0
+  ],
+  [
+   "Sotiria Technology",
+   0.0,
+   2.0,
+   -2.0
+  ],
+  [
+   "Bota Systems",
+   0.0,
+   5.0,
+   -5.0
+  ],
+  [
+   "OQ Technology",
+   0.0,
+   11.0,
+   -11.0
+  ]
+ ]
+}

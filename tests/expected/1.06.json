@@ -1,0 +1,52 @@
+{
+ "columns": [
+  "company",
+  "week_score",
+  "funding",
+  "press",
+  "hiring",
+  "github"
+ ],
+ "rows": [
+  [
+   "Axelera AI",
+   6.0,
+   0.0,
+   1.0,
+   3.0,
+   2.0
+  ],
+  [
+   "Hack The Box",
+   6.0,
+   0.0,
+   1.0,
+   5.0,
+   0.0
+  ],
+  [
+   "SolidKosmos",
+   4.0,
+   0.0,
+   0.0,
+   0.0,
+   4.0
+  ],
+  [
+   "WeatherXM",
+   2.0,
+   0.0,
+   0.0,
+   0.0,
+   2.0
+  ],
+  [
+   "Aether Aeronautics",
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0
+  ]
+ ]
+}

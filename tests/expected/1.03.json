@@ -1,0 +1,24 @@
+{
+ "columns": [
+  "category",
+  "n"
+ ],
+ "rows": [
+  [
+   "Health & Biotech",
+   13.0
+  ],
+  [
+   "Robotics & Drones",
+   13.0
+  ],
+  [
+   "AI & Machine Learning",
+   11.0
+  ],
+  [
+   "Space & Defense",
+   11.0
+  ]
+ ]
+}

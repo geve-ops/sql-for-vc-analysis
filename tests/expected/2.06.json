@@ -1,0 +1,88 @@
+{
+ "columns": [
+  "company",
+  "category"
+ ],
+ "rows": [
+  [
+   "Attisat",
+   "Space & Defense"
+  ],
+  [
+   "Better Origin",
+   "Energy & Climate Tech"
+  ],
+  [
+   "Centaur Analytics",
+   "Energy & Climate Tech"
+  ],
+  [
+   "ClearDrop",
+   "Energy & Climate Tech"
+  ],
+  [
+   "EMTech Space",
+   "Space & Defense"
+  ],
+  [
+   "Feel Therapeutics",
+   "Health & Biotech"
+  ],
+  [
+   "Hoplon AI",
+   "Space & Defense"
+  ],
+  [
+   "Intelistyle",
+   "AI & Machine Learning"
+  ],
+  [
+   "Koios Care",
+   "Health & Biotech"
+  ],
+  [
+   "Navenio",
+   "Semiconductors & Hardware"
+  ],
+  [
+   "Neurohive",
+   "Energy & Climate Tech"
+  ],
+  [
+   "Perceptual Robotics",
+   "Robotics & Drones"
+  ],
+  [
+   "Pleioflow",
+   "Health & Biotech"
+  ],
+  [
+   "PlugSecure",
+   "Energy & Climate Tech"
+  ],
+  [
+   "Progressive Robotics",
+   "Robotics & Drones"
+  ],
+  [
+   "Purposeful",
+   "Health & Biotech"
+  ],
+  [
+   "QRBIT",
+   "Quantum & Advanced Computing"
+  ],
+  [
+   "Trimsignal",
+   "Semiconductors & Hardware"
+  ],
+  [
+   "Ucandrone",
+   "Robotics & Drones"
+  ],
+  [
+   "Velos Rotors",
+   "Robotics & Drones"
+  ]
+ ]
+}

@@ -1,6 +1,6 @@
 -- check: ordered
 WITH weekly AS (
-    SELECT snapshot_date, count(*) AS postings
+    SELECT snapshot_date, count(DISTINCT item_id) AS postings
     FROM signals
     WHERE signal = 'job'
     GROUP BY snapshot_date

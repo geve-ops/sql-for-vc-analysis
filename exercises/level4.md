@@ -53,7 +53,7 @@ Total per company in a CTE (join `watchlist` for `category`). Then `RANK() OVER 
 
 ### 4.04 Is hiring across the watchlist going up?
 
-**Question.** How many job postings are open across the whole watchlist in each weekly snapshot, and how did that change from the week before?
+**Question.** How many job postings are open across the whole watchlist in each weekly snapshot, and how did that change from the week before? Count each posting once (distinct `item_id`, as in 2.05).
 
 **Return:** `snapshot_date`, `postings`, `change` (NULL for the first week). **Sort:** date.
 
@@ -66,13 +66,13 @@ Count per `snapshot_date` in a CTE, then `postings - LAG(postings) OVER (ORDER B
 
 ### 4.05 Share of hiring by sector
 
-**Question.** In the 16 November 2026 snapshot, what share of all open job postings does each sector have?
+**Question.** In the 16 November 2026 snapshot, what share of all open job postings does each sector have? Count each posting once (distinct `item_id`).
 
 **Return:** `category`, `postings`, `pct_of_all` (percent, rounded to 1 decimal). **Sort:** `postings` highest first, then category.
 
 <details><summary>Hint</summary>
 
-You can wrap an aggregate in a window function: `sum(count(*)) OVER ()` is the total across all groups. `OVER ()` with nothing inside means "all rows". Multiply by `100.0`, not `100`, so the division is not integer division.
+You can wrap an aggregate in a window function: `sum(count(DISTINCT s.item_id)) OVER ()` is the total across all groups. `OVER ()` with nothing inside means "all rows". Multiply by `100.0`, not `100`, so the division is not integer division.
 </details>
 
 ---
@@ -102,7 +102,7 @@ You can wrap an aggregate in a window function: `sum(count(*)) OVER ()` is the t
 
 **Return:** `rank`, `company`, `momentum`, `week_score`, `last_week`. **Sort:** rank.
 
-Check your result against the table at the top of `digests/2026-11-16.md` in the tracker. The two should be identical.
+Check your result against the Top Movers table in the tracker's [digest of 16 November 2026](https://github.com/geve-ops/vc-dealflow-tracker/blob/main/digests/2026-11-16.md). The two should be identical.
 
 <details><summary>Hint</summary>
 

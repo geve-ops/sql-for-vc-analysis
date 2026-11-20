@@ -1,0 +1,36 @@
+{
+ "columns": [
+  "company",
+  "category",
+  "round_month",
+  "round",
+  "commits_baseline",
+  "commits_before"
+ ],
+ "rows": [
+  [
+   "Causaly",
+   "Health & Biotech",
+   "2024-07",
+   "USD 60M",
+   28.0,
+   55.0
+  ],
+  [
+   "Moveo.AI",
+   "AI & Machine Learning",
+   "2024-08",
+   "USD 2.6M",
+   2.0,
+   12.0
+  ],
+  [
+   "WeatherXM",
+   "Energy & Climate Tech",
+   "2024-05",
+   "USD 7.7M",
+   91.0,
+   297.0
+  ]
+ ]
+}
