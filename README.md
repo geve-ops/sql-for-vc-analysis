@@ -1,13 +1,11 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="SQL for VC analysis: Greek deep tech deal flow. 88 companies, 4 signal feeds, 7 tested models, 17 data-quality rules, 35 exercises, and an audit that caught a scoring bug in the deal-flow tracker." width="100%">
+  <img src="docs/banner.svg" alt="SQL for VC analysis: Greek deep tech deal flow, modelled and tested in DuckDB. 88 companies, 69 tracked weekly, 7 tested models, 17 data-quality rules, 35 exercises. Figure: how the audit changed the Top Movers ranking." width="100%">
 </p>
 
 <p align="center">
   <a href="https://github.com/geve-ops/sql-for-vc-analysis/actions/workflows/ci.yml"><img src="https://github.com/geve-ops/sql-for-vc-analysis/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&amp;logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/DuckDB-SQL-FFF000?logo=duckdb&amp;logoColor=black" alt="DuckDB">
-  <a href="case_study/README.md"><img src="https://img.shields.io/badge/case%20study-6%20questions-2a78d6" alt="Case study: 6 questions"></a>
-  <a href="docs/architecture.md"><img src="https://img.shields.io/badge/docs-architecture%20%26%20data%20dictionary-1baf7a" alt="Docs"></a>
 </p>
 
 

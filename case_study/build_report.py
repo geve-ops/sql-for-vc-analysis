@@ -254,101 +254,91 @@ def banner(con, as_of):
 
     one = lambda sql: con.sql(sql).fetchall()[0][0]  # noqa: E731
     stats = [
-        (one("SELECT count(*) FROM analytics.dim_company"), "companies", "on the market map"),
-        (one("SELECT count(DISTINCT signal) FROM analytics.fct_signal"), "signal feeds", "tracked weekly"),
-        (count_files("models", ".sql"), "tested models", "dim / fct / bridge"),
-        (count_files(os.path.join("tests", "data_quality"), ".sql"), "data-quality", "SQL checks in CI"),
-        (count_files("answers", ".sql"), "exercises", "graded, five levels"),
+        (one("SELECT count(*) FROM analytics.dim_company"), "companies"),
+        (one("SELECT count(*) FROM analytics.dim_company WHERE on_watchlist"), "tracked weekly"),
+        (count_files("models", ".sql"), "tested models"),
+        (count_files(os.path.join("tests", "data_quality"), ".sql"), "data-quality rules"),
+        (count_files("answers", ".sql"), "exercises"),
     ]
     cols, rows = query(con, "05c_momentum_check")
     now, pub, name = cols.index("rank"), cols.index("rank_as_published"), cols.index("company")
     rows = [r for r in rows if r[now] is not None and r[pub] is not None]
     fell = sorted((r for r in rows if r[now] - r[pub] >= 2), key=lambda r: r[pub])
 
-    W, H = 1280, 440
-    font = "font-family=\"'Inter','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\""
+    # An editorial page: paper, ink, one accent colour, a serif title, thin rules, a captioned figure.
+    W, H = 1280, 400
+    PAPER, INK_, GREY, RULE, ACCENT = "#fbfaf7", "#1a1a1a", "#6b6a66", "#d9d6cd", "#d0571f"
+    sans = "font-family=\"'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\""
+    serif = "font-family=\"Georgia,'Times New Roman',serif\""
     out = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" '
-        f'aria-labelledby="t d">',
+        'aria-labelledby="t d">',
         '<title id="t">SQL for VC analysis: Greek deep tech deal flow</title>',
-        f'<desc id="d">{stats[0][0]} companies, {stats[1][0]} signal feeds, {stats[2][0]} tested models, '
+        f'<desc id="d">{stats[0][0]} companies, {stats[1][0]} tracked weekly, {stats[2][0]} tested models, '
         f"{stats[3][0]} data-quality rules, {stats[4][0]} exercises. Data as of {as_of:%d %B %Y}.</desc>",
-        "<defs>",
-        '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">'
-        '<stop offset="0" stop-color="#0b1626"/><stop offset="1" stop-color="#12243b"/></linearGradient>',
-        '<pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">'
-        '<path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.035"/></pattern>',
-        '<linearGradient id="rule" x1="0" x2="1"><stop offset="0" stop-color="#2a78d6"/>'
-        '<stop offset="1" stop-color="#1baf7a"/></linearGradient>',
-        f'<clipPath id="card"><rect width="{W}" height="{H}" rx="18"/></clipPath>',
-        "</defs>",
-        '<g clip-path="url(#card)">',
-        f'<rect width="{W}" height="{H}" fill="url(#bg)"/>',
-        f'<rect width="{W}" height="{H}" fill="url(#grid)"/>',
-        f'<rect x="0" y="0" width="{W}" height="5" fill="url(#rule)"/>',
-        "</g>",
-        f"<g {font}>",
-        # Left: what this is.
-        '<text x="64" y="78" fill="#6fb1ff" font-size="15" font-weight="600" letter-spacing="2.4">'
-        "VENTURE ANALYTICS  ·  GREEK DEEP TECH</text>",
-        '<text x="62" y="140" fill="#ffffff" font-size="58" font-weight="700" letter-spacing="-1">'
-        "SQL for VC analysis</text>",
-        '<text x="64" y="184" fill="#b9c6d8" font-size="22">'
-        "Greek deep tech deal flow: modelled, tested and audited in SQL.</text>",
+        f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" fill="{PAPER}" stroke="{RULE}"/>',
+        f"<g {sans}>",
+        f'<text x="64" y="76" fill="{GREY}" font-size="16">Gerald Velas, portfolio project</text>',
+        f'<text x="62" y="142" fill="{INK_}" font-size="60" {serif}>SQL for VC analysis</text>',
+        f'<text x="64" y="186" fill="{GREY}" font-size="21">'
+        "Greek deep tech deal flow, modelled and tested in DuckDB</text>",
+        f'<line x1="64" y1="226" x2="740" y2="226" stroke="{INK_}" stroke-width="1"/>',
     ]
-    # Key numbers, one tile each.
-    x = 64
-    for value, label, sub in stats:
+    # Key figures, set like a table row: number above, label below, thin rules between.
+    x, colw = 64, 136
+    for i, (value, label) in enumerate(stats):
+        if i:
+            out.append(f'<line x1="{x - 18}" y1="246" x2="{x - 18}" y2="320" stroke="{RULE}"/>')
         out += [
-            f'<rect x="{x}" y="226" width="132" height="108" rx="12" fill="#ffffff" fill-opacity="0.045" '
-            'stroke="#ffffff" stroke-opacity="0.09"/>',
-            f'<text x="{x + 18}" y="276" fill="#ffffff" font-size="40" font-weight="700">{value}</text>',
-            f'<text x="{x + 18}" y="303" fill="#dbe4ef" font-size="14" font-weight="600">{escape(label)}</text>',
-            f'<text x="{x + 18}" y="321" fill="#8597ad" font-size="11.5">{escape(sub)}</text>',
+            f'<text x="{x}" y="290" fill="{INK_}" font-size="42" {serif}>{value}</text>',
+            f'<text x="{x}" y="316" fill="{GREY}" font-size="14">{escape(label)}</text>',
         ]
-        x += 144
-    out += [
-        '<text x="64" y="384" fill="#8597ad" font-size="14">DuckDB  ·  SQL models  ·  data-quality tests  ·  '
-        f"CI on every push  ·  data frozen {as_of.day} {as_of:%b %Y}</text>",
-    ]
-    # Right: the headline result, the Top Movers ranking before and after the audit.
-    px, py, pw, ph = 832, 56, 384, 330
-    x0, x1, top = px + 64, px + pw - 150, py + 98
-    step = (ph - 132) / max(len(rows) - 1, 1)
-    out += [
-        f'<rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="14" fill="#ffffff" fill-opacity="0.04" '
-        'stroke="#ffffff" stroke-opacity="0.09"/>',
-        f'<text x="{px + 24}" y="{py + 34}" fill="#ffffff" font-size="15" font-weight="700">'
-        "The audit: a scoring bug caught in SQL</text>",
-        f'<text x="{px + 24}" y="{py + 55}" fill="#8597ad" font-size="12">'
-        "Top Movers rank, as first published vs after the fix</text>",
-        f'<text x="{x0}" y="{top - 14}" fill="#8597ad" font-size="11" text-anchor="middle">published</text>',
-        f'<text x="{x1}" y="{top - 14}" fill="#8597ad" font-size="11" text-anchor="middle">now</text>',
-    ]
+        x += colw
+    out.append(
+        f'<text x="64" y="362" fill="{GREY}" font-size="13">Data from the Greek Deep Tech Market Map and the '
+        f"vc-dealflow-tracker, frozen at the run of {as_of.day} {as_of:%B %Y}.</text>"
+    )
+
+    # The figure: how the audit changed the Top Movers ranking.
+    fx = 836
+    x0, x1, top, step = fx + 44, fx + 214, 140, 23.5
     y = lambda rank: top + (rank - 1) * step  # noqa: E731
+    out += [
+        f'<line x1="{fx}" y1="56" x2="{fx}" y2="370" stroke="{RULE}"/>',
+        f'<text x="{fx + 24}" y="76" fill="{INK_}" font-size="15" font-weight="600">'
+        "How the audit changed the ranking</text>",
+        f'<text x="{fx + 24}" y="96" fill="{GREY}" font-size="12.5">Top Movers rank, before and after the '
+        "tracker's scoring fix</text>",
+        f'<text x="{x0}" y="{top - 16}" fill="{GREY}" font-size="11.5" text-anchor="middle">before</text>',
+        f'<text x="{x1}" y="{top - 16}" fill="{GREY}" font-size="11.5" text-anchor="middle">after</text>',
+    ]
     for r in sorted(rows, key=lambda r: r in fell):  # highlighted lines drawn last, on top
         hot = r in fell
-        color, width, op = ("#eb6834", 3, 1) if hot else ("#9fb0c4", 1.6, 0.45)
+        color, width = (ACCENT, 2.4) if hot else ("#b8b5ad", 1.2)
         out.append(
             f'<line x1="{x0}" y1="{y(r[pub]):.1f}" x2="{x1}" y2="{y(r[now]):.1f}" stroke="{color}" '
-            f'stroke-width="{width}" stroke-opacity="{op}" stroke-linecap="round"/>'
+            f'stroke-width="{width}"/>'
         )
         for cx, rank in ((x0, r[pub]), (x1, r[now])):
-            out.append(
-                f'<circle cx="{cx}" cy="{y(rank):.1f}" r="{4 if hot else 3}" fill="{color}" fill-opacity="{op}"/>'
-            )
+            out.append(f'<circle cx="{cx}" cy="{y(rank):.1f}" r="{3.2 if hot else 2.4}" fill="{color}"/>')
     for r in rows:
         out.append(
-            f'<text x="{x0 - 16}" y="{y(r[pub]) + 4:.1f}" fill="#8597ad" font-size="11" text-anchor="end">'
+            f'<text x="{x0 - 12}" y="{y(r[pub]) + 4:.1f}" fill="{GREY}" font-size="11" text-anchor="end">'
             f"{r[pub]}</text>"
         )
     for r in fell:
         label = escape(r[name].split(" (")[0])
         out.append(
-            f'<text x="{x1 + 14}" y="{y(r[now]) + 4:.1f}" fill="#ffb38a" font-size="12.5" font-weight="600">'
-            f"{label}  {r[pub]} → {r[now]}</text>"
+            f'<text x="{x1 + 10}" y="{y(r[now]) + 4:.1f}" fill="{ACCENT}" font-size="12">'
+            f"{label}, {r[pub]} to {r[now]}</text>"
         )
-    out += ["</g>", "</svg>", ""]
+    out += [
+        f'<text x="{fx + 24}" y="{y(len(rows)) + 30:.1f}" fill="{GREY}" font-size="11">'
+        "Source: case study, section 5. Orange: ranks that rested on misread headlines.</text>",
+        "</g>",
+        "</svg>",
+        "",
+    ]
     with open(BANNER, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(out))
 
