@@ -12,7 +12,7 @@ A Greek early-stage fund looking at deep tech wants to know where the companies 
 | 2 | [Which funds lead, and do the target funds co-invest?](#2-which-greek-funds-lead-and-do-the-target-funds-co-invest) | Rarely: the target funds share {{fact:target_shared_companies}} company between them ({{fact:target_shared_names}}). |
 | 3 | [How is recent capital spread?](#3-how-is-recent-capital-spread) | Median confirmed round since 2025: EUR {{cell:03_recent_rounds|currency=EUR|median_m}}M and USD {{cell:03_recent_rounds|currency=USD|median_m}}M. One round is {{cell:03_recent_rounds|currency=EUR|largest_pct_of_total}}% of the euro total. |
 | 4 | [Who brings in EU research money?](#4-who-brings-in-eu-research-money) | Of the five most active EU project partners, {{fact:grant_top5_backed}} have a Greek fund investor. |
-| 5 | [What drives week-over-week momentum?](#5-what-drives-week-over-week-momentum) | Hiring and GitHub. {{fact:funding_points}} of {{fact:total_points}} points came from funding headlines, and none of them announced a round. |
+| 5 | [What drives momentum, and can the ranking be trusted?](#5-what-drives-momentum-and-can-the-ranking-be-trusted) | Hiring and GitHub. An audit found that {{fact:published_funding_points}} of the {{fact:published_total_points}} points first published came from headlines that announced no round. The tracker has since been fixed and its history rescored. |
 | 6 | [Who should a fund call this month?](#6-who-should-a-fund-call-this-month) | {{fact:window_companies}} companies are in the raising window; {{fact:window_no_greek_fund}} have no Greek investor. |
 
 **Recommendations for a Greek fund**
@@ -21,7 +21,7 @@ A Greek early-stage fund looking at deep tech wants to know where the companies 
 2. **Build syndicates through the early-stage funds.** The larger Greek funds rarely co-invest with each other; Evercurious VC and Genesis Ventures are the connectors.
 3. **Size tickets to the euro market.** Most confirmed euro rounds are under EUR 5M. The median matters more than the total, which a single round dominates.
 4. **Start this month's calls with the raising window.** {{fact:window_no_greek_names}} have no Greek investor yet. Settle the facts the market map still marks UNVERIFIED before the first call.
-5. **Do not rank on keyword funding signals.** Fix the tracker's headline tagging before using momentum to prioritise companies.
+5. **Audit a ranking before acting on it.** The momentum ranking moved companies by up to {{fact:max_rank_shift}} places on headlines that announced nothing. Rerun the section 5 audit after every data refresh.
 
 ## Data and method
 
@@ -128,7 +128,7 @@ Recent rounds left out, and why:
 - Grant-heavy companies are a sourcing list: teams that already deliver EU projects and have not raised from local VC. Whether they want equity at all is the first question to ask.
 - Axelera AI has fewer projects ({{cell:04_eu_grants|company=Axelera AI|projects}}) but the largest consortia (EUR {{cell:04_eu_grants|company=Axelera AI|project_eu_eur_m}}M across its projects), {{cell:04_eu_grants|company=Axelera AI|running}} of them still running.
 
-## 5. What drives week-over-week momentum?
+## 5. What drives momentum, and can the ranking be trusted?
 
 **Why it matters.** The tracker ranks companies by momentum, and a fund will act on that ranking. Each week it scores new funding headlines (5 points), signed EU grants (3), other press (1), new job postings (1) and GitHub activity, each capped. The query adds the points up by signal for each run and uses `LAG` for the change from the week before.
 
@@ -138,13 +138,15 @@ Recent rounds left out, and why:
 
 {{sql:05_weekly_signals}}
 
-Every headline that earned funding points:
+**Auditing the funding points.** The first version of this analysis found that the tracker's funding points did not hold up. Every headline the collector tagged "funding" inside a week's window, with the funding points its company earns today:
 
 {{table:05b_funding_headlines}}
 
 {{sql:05b_funding_headlines}}
 
-The Top Movers ranking with and without those points:
+The model `fct_weekly_score_original_rule` rebuilds each weekly score under the original rules from the raw signals, and a data-quality rule checks that it reproduces every score as first published, row for row. The same Top Movers ranking, now and as first published:
+
+{{chart:ranking_shift}}
 
 {{table:05c_momentum_check}}
 
@@ -152,10 +154,10 @@ The Top Movers ranking with and without those points:
 
 **So what.**
 - Hiring is the signal that grew, from {{fact:hiring_first_run}} points in the first run to {{fact:hiring_latest_run}} in the latest. GitHub is steady at {{fact:github_min}} to {{fact:github_max}} points a week.
-- Funding points made up {{fact:funding_points}} of the {{fact:total_points}} points ({{fact:funding_points_pct}}%), and none of the headlines behind them announces a new round: they are a return-on-investment study, reports of investment *interest*, and a payload-hosting contract. The tagger matches words like "investment" and "secures".
-- That error moves the ranking. OQ Technology is number {{cell:05c_momentum_check|company=OQ Technology|rank}} by momentum but number {{cell:05c_momentum_check|company=OQ Technology|rank_without_funding}} without funding points; Open Cosmos drops from number {{cell:05c_momentum_check|company=Open Cosmos (Open Cosmos Aegean)|rank}} to number {{cell:05c_momentum_check|company=Open Cosmos (Open Cosmos Aegean)|rank_without_funding}}. The top two do not change.
-- A second, smaller error: the tracker scores each city of a multi-city job as a new role. In the latest run Hack The Box earned {{fact:htb_hiring_points_latest}} hiring points for {{fact:htb_new_postings_latest}} new postings. The `fct_signal` model counts each posting once.
-- The fix belongs in the tracker: award funding points only when a headline carries an amount or a round label, and count postings by ID.
+- As first published, funding points were {{fact:published_funding_points}} of {{fact:published_total_points}} points ({{fact:published_funding_pct}}%). None of the {{fact:tagged_headlines}} headlines behind them announces a round: a return-on-investment study, reports of investment *interest*, and a payload-hosting contract reported three times. The tagger matched words like "investment" and "secures".
+- The error moved the ranking. OQ Technology was number {{cell:05c_momentum_check|company=OQ Technology|rank_as_published}} as published and is number {{cell:05c_momentum_check|company=OQ Technology|rank}} today; Open Cosmos was number {{cell:05c_momentum_check|company=Open Cosmos (Open Cosmos Aegean)|rank_as_published}} and is number {{cell:05c_momentum_check|company=Open Cosmos (Open Cosmos Aegean)|rank}}.
+- A second, smaller error: a job listed in several cities scored once per city. In the latest run Hack The Box was given {{fact:htb_hiring_points_published}} hiring points for {{fact:htb_new_postings_latest}} new postings; it now gets {{fact:htb_hiring_points_latest}}.
+- **Outcome.** Both findings went back to the tracker. It now scores a headline as funding only when it names a round or an amount next to a money word, and counts each posting once ([fix](https://github.com/geve-ops/vc-dealflow-tracker/commit/eb57a51)). It then rescored its whole history ([rescore](https://github.com/geve-ops/vc-dealflow-tracker/commit/683eb30)). The funding points today total {{fact:funding_points}} of {{fact:total_points}}. Rerun this audit after every refresh: the collector's tag (`news_kind`) is still the keyword tag, so the audit table will show any new headline it mislabels.
 
 ## 6. Who should a fund call this month?
 
@@ -180,7 +182,7 @@ The Top Movers ranking with and without those points:
 - **Round data.** Round sizes are the last round only, as recorded in the market map. {{fact:recent_excluded_rounds}} recent rounds are excluded for approximate or unverified figures, and earlier rounds are not counted.
 - **Fund tags.** `greek_funds` comes from the market map's `investors` column. A holding no source mentions is missing.
 - **Grants.** CORDIS projects are matched by company name, and the amounts are whole-project EU contributions shared by all partners.
-- **Signals.** Funding headlines are tagged by keyword (section 5 shows the cost). A company with no GitHub organisation, job board or EU project can only score through news, so a low score means "nothing visible", not "nothing happening".
+- **Signals.** `news_kind` is the collector's keyword tag; the tracker's scoring applies a stricter rule (section 5). A company with no GitHub organisation, job board or EU project can only score through news, so a low score means "nothing visible", not "nothing happening".
 
 The full list is in the [data dictionary](../docs/data_dictionary.md#limits-of-the-data).
 

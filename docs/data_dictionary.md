@@ -124,17 +124,17 @@ The 69 companies the tracker follows every week: the market map's Include and Bo
 
 ## scores
 
-The tracker's weekly score, one row per company per run (26 October, 2, 9 and 16 November 2026).
+The tracker's weekly score, one row per company per run (26 October, 2, 9 and 16 November 2026), as rescored on 23 November 2026 under the tracker's corrected rules. The scores as first published are in `analytics.ref_scores_first_published`.
 
 | Column | Type | Meaning |
 |---|---|---|
 | `date` | DATE | Date of the weekly run. With `company_id`, the key. |
 | `company_id`, `company` | VARCHAR | The company. |
 | `week_score` | BIGINT | Sum of the five signal columns. |
-| `funding` | BIGINT | 5 points per new headline tagged `funding`, max 10. |
+| `funding` | BIGINT | 5 points per new headline that names a round, or an amount next to a money word; max 10. |
 | `grants` | BIGINT | 3 points per newly signed EU grant, max 6. |
 | `press` | BIGINT | 1 point per other new headline, max 3. |
-| `hiring` | BIGINT | 1 point per new job posting, max 5. |
+| `hiring` | BIGINT | 1 point per new job posting, however many cities list it; max 5. |
 | `github` | BIGINT | Points for new GitHub activity (repos pushed, commits), capped; bot commits score nothing. |
 
 Momentum (exercise 4.07) is `week_score` of the latest run + 0.5 × the run before + 0.25 × two runs back + 0.125 × three runs back.
@@ -153,7 +153,7 @@ Every item in every weekly snapshot, flattened by `build_db.py`. A snapshot list
 | `url` | VARCHAR | all | Link to the item. News links go through Google News. |
 | `event_date` | DATE | all | Repo's last push, headline or job publish date, or grant signature date. NULL for 34 job rows whose board gives no date. |
 | `source` | VARCHAR | all | GitHub organisation, news outlet, job board, or `CORDIS`. |
-| `news_kind` | VARCHAR | news | `funding` or `press`, tagged by keyword. |
+| `news_kind` | VARCHAR | news | `funding` or `press`: the collector's keyword tag, given when the headline was collected. Since 20 November 2026 the tracker's scoring applies a stricter rule (a round label, or an amount next to a money word), so a `funding` tag no longer means funding points. Case study section 5 audits the difference. |
 | `lang` | VARCHAR | news | `en` or `el`. |
 | `location` | VARCHAR | job | Job location as given by the board. |
 | `stars` | INTEGER | github_repo | GitHub stars. |
@@ -197,6 +197,76 @@ Did GitHub commits change in the months before a known round? One row per compan
 ## Analytics models
 
 Built by [models/](../models/) in file order; each file creates one table in the `analytics` schema. Each model's grain is tested in [tests/data_quality/](../tests/data_quality/).
+
+```mermaid
+erDiagram
+    dim_company ||--|| fct_last_round : "last round, parsed"
+    dim_company ||--o{ bridge_company_fund : "Greek funds"
+    ref_target_fund ||--o{ bridge_company_fund : "flags target funds"
+    dim_company ||--o{ fct_signal : "items per snapshot"
+    dim_company ||--o{ fct_weekly_score : "one row per run"
+    dim_company ||--o| company_momentum : "watchlist companies"
+    fct_weekly_score ||--|| fct_weekly_score_original_rule : "same grain"
+    ref_scores_first_published ||--|| fct_weekly_score_original_rule : "checked against"
+
+    dim_company {
+        varchar company_id PK
+        varchar company
+        varchar sector
+        boolean on_watchlist
+        integer founded_year
+        varchar greek_fund_status
+        boolean has_unverified_fact
+    }
+    fct_last_round {
+        varchar company_id PK
+        varchar amount_status
+        varchar currency
+        double amount_m
+        date round_month
+        boolean is_usable
+    }
+    bridge_company_fund {
+        varchar company_id FK
+        varchar fund
+        boolean is_current
+        boolean is_target_fund
+    }
+    fct_signal {
+        date snapshot_date
+        varchar company_id FK
+        varchar signal
+        varchar item_id
+        varchar news_kind
+        bigint listings
+    }
+    fct_weekly_score {
+        date run_date
+        varchar company_id FK
+        bigint weeks_back
+        double momentum_weight
+        bigint week_score
+    }
+    fct_weekly_score_original_rule {
+        date run_date
+        varchar company_id FK
+        bigint week_score_now
+        bigint week_score
+    }
+    company_momentum {
+        varchar company_id PK
+        double momentum
+        bigint momentum_rank
+    }
+    ref_target_fund {
+        varchar fund PK
+    }
+    ref_scores_first_published {
+        varchar date
+        varchar company_id
+        varchar week_score
+    }
+```
 
 ### analytics.dim_company
 
@@ -275,6 +345,24 @@ One row per watchlist company (69): the tracker's Top Movers ranking rebuilt in 
 | `momentum_rank` | BIGINT | Rank by momentum, then this week's score, then name; NULL when momentum is 0. Matches the tracker's digest. |
 | `rank_ex_funding` | BIGINT | The same rank on `momentum_ex_funding`. |
 
+### analytics.fct_weekly_score_original_rule
+
+One row per weekly run and company (276): the weekly score as the tracker's original rules gave it, rebuilt from `fct_signal`. The tracker changed two rules on 20 November 2026 and rescored its history ([fix](https://github.com/geve-ops/vc-dealflow-tracker/commit/eb57a51), [rescore](https://github.com/geve-ops/vc-dealflow-tracker/commit/683eb30)): funding points need a round label or an amount next to a money word, and a posting counts once however many cities list it. The rule `score_original_rule_matches_published` checks every row against `ref_scores_first_published`.
+
+| Column | Type | Meaning |
+|---|---|---|
+| `run_date`, `company_id`, `weeks_back`, `momentum_weight` | | As in `fct_weekly_score`. |
+| `week_score_now` | BIGINT | Today's week score, from `scores`. |
+| `week_score` | BIGINT | The week score under the original rules. |
+| `funding` | BIGINT | 5 points per headline tagged `funding` in the week's window, capped at 10. |
+| `press` | BIGINT | Recounted from the collector's tags where tagged funding headlines exist; otherwise today's points. |
+| `hiring` | BIGINT | One point per job listing where a posting was listed in several cities; otherwise today's points. |
+| `grants`, `github` | BIGINT | Unchanged by the fix: today's points. |
+
+### analytics.ref_scores_first_published
+
+The weekly scores exactly as the tracker first published them, before the fix ([seeds/scores_first_published.csv](../seeds/scores_first_published.csv), copied from tracker commit `029b048`). Same columns as `scores`, all text. Kept only as the reference for the rule above.
+
 ### analytics.ref_target_fund
 
 The funds the analysis is written for, from [seeds/target_fund.csv](../seeds/target_fund.csv): Big Pi Ventures, Marathon VC, Metavallon VC, Velocity Partners and egg (Eurobank).
@@ -289,7 +377,7 @@ The funds the analysis is written for, from [seeds/target_fund.csv](../seeds/tar
 - **Fund tags.** `greek_funds` comes from the market map's `investors` column. A holding the sources do not mention is missing, and egg (Eurobank) has no tagged holding.
 - **Grants are matched by name.** CORDIS projects are found by searching for the company's name, so a false match is possible, and `eu_contribution` is the whole project's EU budget.
 - **Signals see only what is public.** 22 companies have a GitHub organisation and 38 a job board or careers page. A company with neither scores only through news, so a low score means "nothing visible", not "nothing happening".
-- **Keyword tagging.** `news_kind = 'funding'` is a keyword match. The case study shows that none of the six headlines that earned funding points in the four runs announced an actual round.
+- **Keyword tagging.** `news_kind = 'funding'` is a keyword match. None of the six headlines it tagged in these four runs announced a round; they earned funding points under the tracker's original rule, and earn none since the fix of 20 November 2026 ([case study, section 5](../case_study/README.md#5-what-drives-momentum-and-can-the-ranking-be-trusted)).
 - **Shared grant projects.** Two CORDIS projects (NETHELIX and ForeSight) are matched to both Altus LSA and Satways. Summing `eu_contribution` across companies counts them twice (exercise 5.04).
-- **Repeated job rows.** Job boards list a multi-city posting once per location, and sometimes repeat the same location (exercise 5.01). The 16 November snapshot has 95 job rows but 74 distinct postings; `analytics.fct_signal` keeps one row per posting. The scoring that produced this data counted each row as a new role, so a multi-city posting could earn more than one hiring point (the cap of 5 per week limits the effect).
+- **Repeated job rows.** Job boards list a multi-city posting once per location, and sometimes repeat the same location (exercise 5.01). The 16 November snapshot has 95 job rows but 74 distinct postings; `analytics.fct_signal` keeps one row per posting. The tracker's original scoring counted each row as a new role, so a multi-city posting could earn more than one hiring point. Since the fix of 20 November 2026, `scores` counts each posting once, as `fct_signal` does; `fct_weekly_score_original_rule` keeps the original figures.
 - **Snapshot dates.** `event_date` comes from the source; some job boards give none (NULL), and Google News dates can differ by a day from the outlet's own.

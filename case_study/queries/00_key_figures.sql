@@ -17,6 +17,25 @@ recent AS (
     WHERE r.round_month >= DATE '2025-01-01'
 ),
 scores AS (SELECT * FROM analytics.fct_weekly_score),
+original AS (SELECT * FROM analytics.fct_weekly_score_original_rule),
+rank_shift AS (
+    -- Top Movers rank today and as first published, with the tie-breaks of exercise 4.07.
+    SELECT
+        ROW_NUMBER() OVER (ORDER BY m.momentum_now DESC, m.week_now DESC, d.company)       AS rank_now,
+        ROW_NUMBER() OVER (ORDER BY m.momentum_pub DESC, m.week_pub DESC, d.company)       AS rank_published
+    FROM (
+        SELECT
+            company_id,
+            sum(momentum_weight * week_score_now)              AS momentum_now,
+            sum(momentum_weight * week_score)                  AS momentum_pub,
+            max(week_score_now) FILTER (WHERE weeks_back = 1)  AS week_now,
+            max(week_score) FILTER (WHERE weeks_back = 1)      AS week_pub
+        FROM original
+        GROUP BY company_id
+    ) AS m
+    JOIN analytics.dim_company AS d ON d.company_id = m.company_id
+    WHERE m.momentum_now > 0 OR m.momentum_pub > 0
+),
 window_cos AS (
     SELECT r.company_id
     FROM analytics.fct_last_round AS r JOIN watch AS w ON w.company_id = r.company_id
@@ -63,7 +82,13 @@ SELECT metric, value FROM (VALUES
     ('github_max',             (SELECT max(github) FROM weekly)::VARCHAR),
     ('total_points',           (SELECT sum(week_score) FROM scores)::VARCHAR),
     ('funding_points',         (SELECT sum(funding) FROM scores)::VARCHAR),
-    ('funding_points_pct',     (SELECT round(100.0 * sum(funding) / sum(week_score), 1) FROM scores)::VARCHAR),
+    ('tagged_headlines',       (SELECT count(*) FROM analytics.fct_signal
+                                WHERE signal = 'news' AND news_kind = 'funding'
+                                  AND event_date > snapshot_date - INTERVAL 7 DAY)::VARCHAR),
+    ('published_total_points', (SELECT sum(week_score) FROM original)::VARCHAR),
+    ('published_funding_points',(SELECT sum(funding) FROM original)::VARCHAR),
+    ('max_rank_shift',         (SELECT max(abs(rank_now - rank_published)) FROM rank_shift)::VARCHAR),
+    ('published_funding_pct',  (SELECT round(100.0 * sum(funding) / sum(week_score), 1) FROM original)::VARCHAR),
     ('window_companies',       (SELECT count(*) FROM window_cos)::VARCHAR),
     ('window_no_greek_fund',   (SELECT count(*) FROM window_cos AS c JOIN watch AS w USING (company_id)
                                 WHERE w.greek_fund_status <> 'current')::VARCHAR),
@@ -83,5 +108,7 @@ SELECT metric, value FROM (VALUES
                                   AND s.item_id NOT IN (SELECT e.item_id FROM analytics.fct_signal AS e
                                                         WHERE e.signal = 'job' AND e.company_id = 'GRDT-031'
                                                           AND e.snapshot_date < s.snapshot_date))::VARCHAR),
-    ('htb_hiring_points_latest',(SELECT hiring FROM scores WHERE company_id = 'GRDT-031' AND weeks_back = 1)::VARCHAR)
+    ('htb_hiring_points_latest',(SELECT hiring FROM scores WHERE company_id = 'GRDT-031' AND weeks_back = 1)::VARCHAR),
+    ('htb_hiring_points_published',(SELECT hiring FROM original
+                                WHERE company_id = 'GRDT-031' AND weeks_back = 1)::VARCHAR)
 ) AS t (metric, value);

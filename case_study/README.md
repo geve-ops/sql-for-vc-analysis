@@ -12,7 +12,7 @@ A Greek early-stage fund looking at deep tech wants to know where the companies 
 | 2 | [Which funds lead, and do the target funds co-invest?](#2-which-greek-funds-lead-and-do-the-target-funds-co-invest) | Rarely: the target funds share 1 company between them (Anodyne Nanotech). |
 | 3 | [How is recent capital spread?](#3-how-is-recent-capital-spread) | Median confirmed round since 2025: EUR 1.18M and USD 6.75M. One round is 89.6% of the euro total. |
 | 4 | [Who brings in EU research money?](#4-who-brings-in-eu-research-money) | Of the five most active EU project partners, 0 have a Greek fund investor. |
-| 5 | [What drives week-over-week momentum?](#5-what-drives-week-over-week-momentum) | Hiring and GitHub. 25 of 114 points came from funding headlines, and none of them announced a round. |
+| 5 | [What drives momentum, and can the ranking be trusted?](#5-what-drives-momentum-and-can-the-ranking-be-trusted) | Hiring and GitHub. An audit found that 25 of the 114 points first published came from headlines that announced no round. The tracker has since been fixed and its history rescored. |
 | 6 | [Who should a fund call this month?](#6-who-should-a-fund-call-this-month) | 12 companies are in the raising window; 7 have no Greek investor. |
 
 **Recommendations for a Greek fund**
@@ -21,7 +21,7 @@ A Greek early-stage fund looking at deep tech wants to know where the companies 
 2. **Build syndicates through the early-stage funds.** The larger Greek funds rarely co-invest with each other; Evercurious VC and Genesis Ventures are the connectors.
 3. **Size tickets to the euro market.** Most confirmed euro rounds are under EUR 5M. The median matters more than the total, which a single round dominates.
 4. **Start this month's calls with the raising window.** Achira AI, Bitloops, Brainomix, Intryc, Keragon, Robenso, SquareDev have no Greek investor yet. Settle the facts the market map still marks UNVERIFIED before the first call.
-5. **Do not rank on keyword funding signals.** Fix the tracker's headline tagging before using momentum to prioritise companies.
+5. **Audit a ranking before acting on it.** The momentum ranking moved companies by up to 7 places on headlines that announced nothing. Rerun the section 5 audit after every data refresh.
 
 ## Data and method
 
@@ -399,7 +399,7 @@ ORDER BY eu_grants;
 - Grant-heavy companies are a sourcing list: teams that already deliver EU projects and have not raised from local VC. Whether they want equity at all is the first question to ask.
 - Axelera AI has fewer projects (8) but the largest consortia (EUR 243.3M across its projects), 8 of them still running.
 
-## 5. What drives week-over-week momentum?
+## 5. What drives momentum, and can the ranking be trusted?
 
 **Why it matters.** The tracker ranks companies by momentum, and a fund will act on that ranking. Each week it scores new funding headlines (5 points), signed EU grants (3), other press (1), new job postings (1) and GitHub activity, each capped. The query adds the points up by signal for each run and uses `LAG` for the change from the week before.
 
@@ -408,9 +408,9 @@ ORDER BY eu_grants;
 | run | funding | grants | press | hiring | github | total | companies_scoring | change |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 2026-10-26 | 0 | 0 | 4 | 4 | 10 | 18 | 9 | - |
-| 2026-11-02 | 15 | 6 | 6 | 5 | 6 | 38 | 9 | 20 |
-| 2026-11-09 | 10 | 0 | 7 | 11 | 4 | 32 | 12 | -6 |
-| 2026-11-16 | 0 | 0 | 6 | 10 | 10 | 26 | 12 | -6 |
+| 2026-11-02 | 0 | 6 | 9 | 5 | 6 | 26 | 9 | 8 |
+| 2026-11-09 | 0 | 0 | 9 | 11 | 4 | 24 | 12 | -2 |
+| 2026-11-16 | 0 | 0 | 6 | 8 | 10 | 24 | 12 | 0 |
 
 <details><summary>SQL: <code>queries/05_weekly_signals.sql</code></summary>
 
@@ -432,78 +432,107 @@ ORDER BY run;
 ```
 </details>
 
-Every headline that earned funding points:
+**Auditing the funding points.** The first version of this analysis found that the tracker's funding points did not hold up. Every headline the collector tagged "funding" inside a week's window, with the funding points its company earns today:
 
-| run | company | published | source | title |
-|---|---|---|---|---|
-| 2026-11-02 | Hack The Box | 2026-10-27 | Yahoo Finance | Study Finds Hack The Box Cybersecurity Platform Delivered 330% Return on Investment |
-| 2026-11-02 | Open Cosmos (Open Cosmos Aegean) | 2026-10-29 | Lokmat Times | European Space Giant Open Cosmos Eyes Major India Investment After PM Modi Meet |
-| 2026-11-02 | Open Cosmos (Open Cosmos Aegean) | 2026-10-29 | The Tribune | European space company Open Cosmos signals India investment interest after CEO meets PM Modi |
-| 2026-11-09 | OQ Technology | 2026-11-03 | The Joplin Globe | Momentus Secures Contract to Host OQ Technology 5G Payload on Vigoride-9 Mission |
-| 2026-11-09 | OQ Technology | 2026-11-03 | Yahoo Finance | Momentus Secures Contract to Host OQ Technology 5G Payload on Vigoride-9 Mission |
-| 2026-11-09 | OQ Technology | 2026-11-03 | www.marketscreener.com | Momentus Inc. Secures Contract To Host OQ Technology 5G Payload On Vigoride-9 Mission |
+| run | company | published | source | title | funding_points_now |
+|---|---|---|---|---|---:|
+| 2026-11-02 | Hack The Box | 2026-10-27 | Yahoo Finance | Study Finds Hack The Box Cybersecurity Platform Delivered 330% Return on Investment | 0 |
+| 2026-11-02 | Open Cosmos (Open Cosmos Aegean) | 2026-10-29 | Lokmat Times | European Space Giant Open Cosmos Eyes Major India Investment After PM Modi Meet | 0 |
+| 2026-11-02 | Open Cosmos (Open Cosmos Aegean) | 2026-10-29 | The Tribune | European space company Open Cosmos signals India investment interest after CEO meets PM Modi | 0 |
+| 2026-11-09 | OQ Technology | 2026-11-03 | The Joplin Globe | Momentus Secures Contract to Host OQ Technology 5G Payload on Vigoride-9 Mission | 0 |
+| 2026-11-09 | OQ Technology | 2026-11-03 | Yahoo Finance | Momentus Secures Contract to Host OQ Technology 5G Payload on Vigoride-9 Mission | 0 |
+| 2026-11-09 | OQ Technology | 2026-11-03 | www.marketscreener.com | Momentus Inc. Secures Contract To Host OQ Technology 5G Payload On Vigoride-9 Mission | 0 |
 
 <details><summary>SQL: <code>queries/05b_funding_headlines.sql</code></summary>
 
 ```sql
--- Q5b. The headlines behind every funding point in the four runs.
--- A funding point needs a new headline tagged "funding", published inside that week's window.
+-- Q5b. Funding-tag audit: every headline the collector tagged "funding" inside a weekly window,
+-- next to the funding points that company earns in that run under the corrected scoring.
+-- news_kind is the tag given when the headline was collected (the original keyword rule).
 SELECT
     s.snapshot_date     AS run,
     d.company,
     s.event_date        AS published,
     s.source,
-    s.title
+    s.title,
+    w.funding           AS funding_points_now
 FROM analytics.fct_signal AS s
 JOIN analytics.fct_weekly_score AS w
     ON w.company_id = s.company_id AND w.run_date = s.snapshot_date
 JOIN analytics.dim_company AS d ON d.company_id = s.company_id
 WHERE s.signal = 'news'
   AND s.news_kind = 'funding'
-  AND w.funding > 0
   AND s.event_date > s.snapshot_date - INTERVAL 7 DAY
 ORDER BY run, d.company, s.source;
 ```
 </details>
 
-The Top Movers ranking with and without those points:
+The model `fct_weekly_score_original_rule` rebuilds each weekly score under the original rules from the raw signals, and a data-quality rule checks that it reproduces every score as first published, row for row. The same Top Movers ranking, now and as first published:
 
-| rank | company | momentum | without_funding | rank_without_funding |
+![Top Movers rank, as first published and after the tracker's fix](charts/ranking_shift.png)
+
+| rank | company | momentum | momentum_as_published | rank_as_published |
 |---:|---|---:|---:|---:|
 | 1 | Axelera AI | 10 | 10 | 1 |
-| 2 | Hack The Box | 8.75 | 7.5 | 2 |
-| 3 | OQ Technology | 5.5 | 0.5 | 18 |
-| 4 | SolidKosmos | 4 | 4 | 3 |
-| 5 | WeatherXM | 3.88 | 3.88 | 4 |
-| 6 | Open Cosmos (Open Cosmos Aegean) | 3.75 | 1.25 | 10 |
-| 7 | Causaly | 2.75 | 2.75 | 5 |
-| 8 | Bota Systems | 2.5 | 2.5 | 6 |
-| 9 | TileDB (rebranded Tile.ai) | 2 | 2 | 7 |
-| 10 | Satori Analytics | 1.88 | 1.88 | 8 |
+| 2 | Hack The Box | 5.75 | 8.75 | 2 |
+| 3 | SolidKosmos | 4 | 4 | 4 |
+| 4 | WeatherXM | 3.88 | 3.88 | 5 |
+| 5 | Causaly | 2.75 | 2.75 | 7 |
+| 6 | Bota Systems | 2.5 | 2.5 | 8 |
+| 7 | TileDB (rebranded Tile.ai) | 2 | 2 | 9 |
+| 8 | Satori Analytics | 1.88 | 1.88 | 10 |
+| 9 | Open Cosmos (Open Cosmos Aegean) | 1.75 | 3.75 | 6 |
+| 10 | OQ Technology | 1.5 | 5.5 | 3 |
 
 <details><summary>SQL: <code>queries/05c_momentum_check.sql</code></summary>
 
 ```sql
--- Q5c. How much of the Top Movers ranking rests on funding points?
--- The tracker's momentum (exercise 4.07) next to the same score without funding points.
+-- Q5c. How far did the original scoring rules move the Top Movers ranking?
+-- The same momentum ranking (exercise 4.07) on today's scores and on the scores as first published.
+WITH momentum AS (
+    SELECT
+        company_id,
+        round(sum(momentum_weight * week_score_now), 2)                AS momentum_now,
+        round(sum(momentum_weight * week_score), 2)                    AS momentum_original,
+        max(week_score_now) FILTER (WHERE weeks_back = 1)              AS this_week_now,
+        max(week_score) FILTER (WHERE weeks_back = 1)                  AS this_week_original
+    FROM analytics.fct_weekly_score_original_rule
+    GROUP BY company_id
+),
+
+ranked AS (
+    SELECT
+        d.company,
+        m.momentum_now,
+        m.momentum_original,
+        CASE WHEN m.momentum_now > 0 THEN
+            ROW_NUMBER() OVER (ORDER BY m.momentum_now DESC, m.this_week_now DESC, d.company)
+        END                                                            AS rank_now,
+        CASE WHEN m.momentum_original > 0 THEN
+            ROW_NUMBER() OVER (ORDER BY m.momentum_original DESC, m.this_week_original DESC, d.company)
+        END                                                            AS rank_original
+    FROM momentum AS m
+    JOIN analytics.dim_company AS d ON d.company_id = m.company_id
+)
+
 SELECT
-    momentum_rank           AS rank,
+    rank_now            AS rank,
     company,
-    momentum,
-    momentum_ex_funding     AS without_funding,
-    rank_ex_funding         AS rank_without_funding
-FROM analytics.company_momentum
-WHERE momentum_rank <= 10
-ORDER BY rank;
+    momentum_now        AS momentum,
+    momentum_original   AS momentum_as_published,
+    rank_original       AS rank_as_published
+FROM ranked
+WHERE rank_now <= 10 OR rank_original <= 10
+ORDER BY rank_now NULLS LAST, rank_original;
 ```
 </details>
 
 **So what.**
-- Hiring is the signal that grew, from 4 points in the first run to 10 in the latest. GitHub is steady at 4 to 10 points a week.
-- Funding points made up 25 of the 114 points (21.9%), and none of the headlines behind them announces a new round: they are a return-on-investment study, reports of investment *interest*, and a payload-hosting contract. The tagger matches words like "investment" and "secures".
-- That error moves the ranking. OQ Technology is number 3 by momentum but number 18 without funding points; Open Cosmos drops from number 6 to number 10. The top two do not change.
-- A second, smaller error: the tracker scores each city of a multi-city job as a new role. In the latest run Hack The Box earned 5 hiring points for 3 new postings. The `fct_signal` model counts each posting once.
-- The fix belongs in the tracker: award funding points only when a headline carries an amount or a round label, and count postings by ID.
+- Hiring is the signal that grew, from 4 points in the first run to 8 in the latest. GitHub is steady at 4 to 10 points a week.
+- As first published, funding points were 25 of 114 points (21.9%). None of the 6 headlines behind them announces a round: a return-on-investment study, reports of investment *interest*, and a payload-hosting contract reported three times. The tagger matched words like "investment" and "secures".
+- The error moved the ranking. OQ Technology was number 3 as published and is number 10 today; Open Cosmos was number 6 and is number 9.
+- A second, smaller error: a job listed in several cities scored once per city. In the latest run Hack The Box was given 5 hiring points for 3 new postings; it now gets 3.
+- **Outcome.** Both findings went back to the tracker. It now scores a headline as funding only when it names a round or an amount next to a money word, and counts each posting once ([fix](https://github.com/geve-ops/vc-dealflow-tracker/commit/eb57a51)). It then rescored its whole history ([rescore](https://github.com/geve-ops/vc-dealflow-tracker/commit/683eb30)). The funding points today total 0 of 92. Rerun this audit after every refresh: the collector's tag (`news_kind`) is still the keyword tag, so the audit table will show any new headline it mislabels.
 
 ## 6. Who should a fund call this month?
 
@@ -585,7 +614,7 @@ ORDER BY score_4w DESC, open_roles DESC, d.company;
 - **Round data.** Round sizes are the last round only, as recorded in the market map. 6 recent rounds are excluded for approximate or unverified figures, and earlier rounds are not counted.
 - **Fund tags.** `greek_funds` comes from the market map's `investors` column. A holding no source mentions is missing.
 - **Grants.** CORDIS projects are matched by company name, and the amounts are whole-project EU contributions shared by all partners.
-- **Signals.** Funding headlines are tagged by keyword (section 5 shows the cost). A company with no GitHub organisation, job board or EU project can only score through news, so a low score means "nothing visible", not "nothing happening".
+- **Signals.** `news_kind` is the collector's keyword tag; the tracker's scoring applies a stricter rule (section 5). A company with no GitHub organisation, job board or EU project can only score through news, so a low score means "nothing visible", not "nothing happening".
 
 The full list is in the [data dictionary](../docs/data_dictionary.md#limits-of-the-data).
 

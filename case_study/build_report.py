@@ -120,13 +120,17 @@ def fund_holdings(con):
 
 def weekly_signals(con):
     cols, rows = query(con, "05_weekly_signals")
-    signals = ["funding", "grants", "press", "hiring", "github"]
+    all_signals = ["funding", "grants", "press", "hiring", "github"]
+    # A signal with no points in any run is left out of the bars and named in the note instead.
+    signals = [sig for sig in all_signals if any(r[cols.index(sig)] for r in rows)]
+    empty = [sig for sig in all_signals if sig not in signals]
     fig, ax = plt.subplots(figsize=(8, 4.2))
     labels = [r[0].strftime("%d %b") for r in rows]
     bottom = [0] * len(rows)
-    for k, sig in enumerate(signals):
+    for sig in signals:
         vals = [r[cols.index(sig)] for r in rows]
-        ax.bar(labels, vals, bottom=bottom, color=SERIES[k], width=0.55, label=sig, edgecolor=SURFACE, linewidth=1.5)
+        color = SERIES[all_signals.index(sig)]
+        ax.bar(labels, vals, bottom=bottom, color=color, width=0.55, label=sig, edgecolor=SURFACE, linewidth=1.5)
         bottom = [b + v for b, v in zip(bottom, vals, strict=False)]
     for i, total in enumerate(bottom):
         ax.text(i, total + 0.8, str(total), ha="center", fontsize=9, color=INK)
@@ -140,7 +144,8 @@ def weekly_signals(con):
         ax,
         "weekly_signals",
         "Weekly score points by signal",
-        "Source: vc-dealflow-tracker data/scores.csv, weekly runs 26 Oct to 16 Nov 2026.",
+        "Source: vc-dealflow-tracker data/scores.csv, weekly runs 26 Oct to 16 Nov 2026, rescored after the fix."
+        + (f" No points from: {', '.join(empty)}." if empty else ""),
     )
 
 
@@ -202,7 +207,37 @@ def recent_rounds(con):
     )
 
 
-CHART_FUNCS = {f.__name__: f for f in (fund_holdings, weekly_signals, eu_grants, recent_rounds)}
+def ranking_shift(con):
+    cols, rows = query(con, "05c_momentum_check")
+    now, pub, name = cols.index("rank"), cols.index("rank_as_published"), cols.index("company")
+    rows = [r for r in rows if r[now] is not None and r[pub] is not None]
+    fig, ax = plt.subplots(figsize=(8, 5.2))
+    for r in rows:
+        moved = r[now] - r[pub] >= 2  # fell: its published rank rested on points the fix removed
+        color, width, z = (SERIES[1], 2.2, 3) if moved else (MUTED, 1.2, 2)
+        ax.plot([0, 1], [r[pub], r[now]], color=color, linewidth=width, zorder=z, solid_capstyle="round")
+        ax.scatter([0, 1], [r[pub], r[now]], s=28, color=color, edgecolor=SURFACE, linewidth=1.2, zorder=z + 1)
+        label = r[name].split(" (")[0]
+        weight = "bold" if moved else "normal"
+        ax.text(-0.04, r[pub], f"{label}  {r[pub]}", ha="right", va="center", fontsize=8.5, color=INK, weight=weight)
+        ax.text(1.04, r[now], f"{r[now]}  {label}", ha="left", va="center", fontsize=8.5, color=INK, weight=weight)
+    ax.set_xlim(-0.9, 1.9)
+    ax.set_ylim(max(max(r[now], r[pub]) for r in rows) + 0.7, 0.3)
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels(["as first published", "now"], fontsize=10, color=INK)
+    ax.xaxis.set_ticks_position("top")
+    ax.yaxis.set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    return finish(
+        fig,
+        ax,
+        "ranking_shift",
+        "Top Movers rank, as first published and after the tracker's fix",
+        "Orange: fell once misfired points were removed; the rest moved up. Model: fct_weekly_score_original_rule.",
+    )
+
+
+CHART_FUNCS = {f.__name__: f for f in (fund_holdings, weekly_signals, eu_grants, recent_rounds, ranking_shift)}
 
 PLACEHOLDER = re.compile(r"\{\{(table|sql|chart|fact|cell):([^}]+)\}\}")
 

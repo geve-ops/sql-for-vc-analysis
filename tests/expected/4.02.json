@@ -7,12 +7,6 @@
  ],
  "rows": [
   [
-   "Hack The Box",
-   6.0,
-   2.0,
-   4.0
-  ],
-  [
    "SolidKosmos",
    4.0,
    0.0,
@@ -23,6 +17,12 @@
    6.0,
    3.0,
    3.0
+  ],
+  [
+   "Hack The Box",
+   4.0,
+   2.0,
+   2.0
   ],
   [
    "Aether Aeronautics",
@@ -85,16 +85,16 @@
    -2.0
   ],
   [
+   "OQ Technology",
+   0.0,
+   3.0,
+   -3.0
+  ],
+  [
    "Bota Systems",
    0.0,
    5.0,
    -5.0
-  ],
-  [
-   "OQ Technology",
-   0.0,
-   11.0,
-   -11.0
   ]
  ]
 }

@@ -55,18 +55,19 @@ class ReferenceAnswers(unittest.TestCase):
                 self.assertIsNone(problem, f"{ex}: {problem}")
 
     def test_capstone_matches_the_published_digest(self):
-        # Top movers table in vc-dealflow-tracker/digests/2026-11-16.md (rank, company, momentum, this week).
+        # Top movers table in vc-dealflow-tracker/digests/2026-11-16.md (rank, company, momentum, this week),
+        # as republished on 23 November 2026 after the tracker's scoring fix (tracker commit 683eb30).
         digest = [
             (1, "Axelera AI", 10, 6),
-            (2, "Hack The Box", 8.75, 6),
-            (3, "OQ Technology", 5.5, 0),
-            (4, "SolidKosmos", 4, 4),
-            (5, "WeatherXM", 3.88, 2),
-            (6, "Open Cosmos (Open Cosmos Aegean)", 3.75, 1),
-            (7, "Causaly", 2.75, 1),
-            (8, "Bota Systems", 2.5, 0),
-            (9, "TileDB (rebranded Tile.ai)", 2, 1),
-            (10, "Satori Analytics", 1.88, 1),
+            (2, "Hack The Box", 5.75, 4),
+            (3, "SolidKosmos", 4, 4),
+            (4, "WeatherXM", 3.88, 2),
+            (5, "Causaly", 2.75, 1),
+            (6, "Bota Systems", 2.5, 0),
+            (7, "TileDB (rebranded Tile.ai)", 2, 1),
+            (8, "Satori Analytics", 1.88, 1),
+            (9, "Open Cosmos (Open Cosmos Aegean)", 1.75, 1),
+            (10, "OQ Technology", 1.5, 0),
         ]
         latest = self.con.sql("SELECT max(date) FROM scores").fetchall()[0][0].isoformat()
         if latest != "2026-11-16":
@@ -131,6 +132,33 @@ class ExerciseFiles(unittest.TestCase):
             with open(os.path.join(ROOT, "my_answers", f"{ex}.sql"), encoding="utf-8") as f:
                 code = re.sub(r"--[^\n]*", "", f.read()).strip()
             self.assertEqual(code, "", f"my_answers/{ex}.sql contains SQL; the committed stubs should be empty")
+
+
+class DocsMatchTheRepository(unittest.TestCase):
+    """The counts the README and the architecture page state must match the files."""
+
+    DOCS = ("README.md", os.path.join("docs", "architecture.md"))
+
+    def counts(self):
+        def n(pattern):
+            return len([f for f in os.listdir(os.path.join(ROOT, pattern[0])) if f.endswith(pattern[1])])
+
+        return {
+            r"(\d+) (?:graded )?exercises": len(check.exercises()),
+            r"(\d+) data-quality(?:<br/>)?\s?rules": n(("tests/data_quality", ".sql")),
+            r"(\d+) rules: zero rows": n(("tests/data_quality", ".sql")),
+            r"(\d+) (?:clean, tested tables|models\b)": n(("models", ".sql")),
+            r"(\d+) source tables": 6,
+        }
+
+    def test_stated_counts_are_true(self):
+        for doc in self.DOCS:
+            with open(os.path.join(ROOT, doc), encoding="utf-8") as f:
+                text = f.read()
+            for pattern, actual in self.counts().items():
+                for stated in re.findall(pattern, text):
+                    with self.subTest(doc=doc, claim=pattern):
+                        self.assertEqual(int(stated), actual, f"{doc} states {stated}, the repository has {actual}")
 
 
 if __name__ == "__main__":
