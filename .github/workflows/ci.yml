@@ -22,4 +22,4 @@ jobs:
         run: python run_all.py
 
       - name: The committed report matches the data
-        run: git diff --exit-code -- case_study/README.md README.md
+        run: git diff --exit-code -- case_study/README.md README.md docs/banner.svg

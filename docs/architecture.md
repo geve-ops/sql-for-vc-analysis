@@ -41,7 +41,7 @@ flowchart TB
 | Reference data | `seeds/*.csv` → `analytics.ref_*` | Hand-kept lists: the target funds, and the tracker's scores as first published. | Models, data-quality rules |
 | Models | `models/*.sql` → `analytics` schema | Cleaned, typed tables with a stated grain: one parse of each messy field, used everywhere. | The case study |
 | Tests | `tests/` | Data-quality rules, the reviewed result of every exercise, the checker's own rules, and checks that the docs match the repository. | `run_all.py`, CI |
-| Outputs | `case_study/README.md`, `case_study/charts/`, the findings on `README.md` | Generated from the queries. Nothing typed by hand. | Readers |
+| Outputs | `case_study/README.md`, `case_study/charts/`, the findings on `README.md`, the README banner (`docs/banner.svg`) | Generated from the queries and the repository. Nothing typed by hand. | Readers |
 
 ## Model lineage
 

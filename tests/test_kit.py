@@ -147,7 +147,7 @@ class DocsMatchTheRepository(unittest.TestCase):
             r"(\d+) (?:graded )?exercises": len(check.exercises()),
             r"(\d+) data-quality(?:<br/>)?\s?rules": n(("tests/data_quality", ".sql")),
             r"(\d+) rules: zero rows": n(("tests/data_quality", ".sql")),
-            r"(\d+) (?:clean, tested tables|models\b)": n(("models", ".sql")),
+            r"(\d+) (?:clean, tested tables|tested models|models\b)": n(("models", ".sql")),
             r"(\d+) source tables": 6,
         }
 

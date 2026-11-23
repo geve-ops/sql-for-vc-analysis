@@ -1,4 +1,15 @@
-# SQL for VC analysis: Greek deep tech deal flow
+<p align="center">
+  <img src="docs/banner.svg" alt="SQL for VC analysis: Greek deep tech deal flow. 88 companies, 4 signal feeds, 7 tested models, 17 data-quality rules, 35 exercises, and an audit that caught a scoring bug in the deal-flow tracker." width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/geve-ops/sql-for-vc-analysis/actions/workflows/ci.yml"><img src="https://github.com/geve-ops/sql-for-vc-analysis/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&amp;logoColor=white" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/DuckDB-SQL-FFF000?logo=duckdb&amp;logoColor=black" alt="DuckDB">
+  <a href="case_study/README.md"><img src="https://img.shields.io/badge/case%20study-6%20questions-2a78d6" alt="Case study: 6 questions"></a>
+  <a href="docs/architecture.md"><img src="https://img.shields.io/badge/docs-architecture%20%26%20data%20dictionary-1baf7a" alt="Docs"></a>
+</p>
+
 
 Venture analysis in SQL on real data: 88 Greek deep-tech companies with their investors and rounds, plus four weeks of hiring, GitHub, news and EU-grant signals. The data comes from two of my other projects, the [Greek Deep Tech Market Map](https://github.com/geve-ops/greek-deeptech-market-map) and the weekly [deal-flow tracker](https://github.com/geve-ops/vc-dealflow-tracker). It runs on [DuckDB](https://duckdb.org/), whose SQL is close to PostgreSQL and Snowflake.
 
@@ -131,7 +142,7 @@ my_answers/               your queries, one file per exercise
 answers/                  reference answers, each with its approach and the usual mistake
 case_study/               the report (README.md), queries/, charts/, template.md, findings.md, build_report.py
 tests/                    data-quality rules, reviewed exercise results, kit tests
-docs/                     architecture, data dictionary, SQL style guide, SQL reference card
+docs/                     architecture, data dictionary, SQL style guide, SQL reference card, banner.svg (generated)
 .github/workflows/ci.yml  CI: the same checks on every push
 requirements.txt          duckdb, matplotlib (requirements-dev.txt: sqlfluff, ruff)
 ```
