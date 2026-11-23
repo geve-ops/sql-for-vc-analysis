@@ -27,8 +27,8 @@ Data as of the tracker's weekly run of 16 November 2026.
 Python 3.10 or newer.
 
 ```
-git clone https://github.com/geve-ops/sql-learning-kit.git
-cd sql-learning-kit
+git clone https://github.com/geve-ops/sql-for-vc-analysis.git
+cd sql-for-vc-analysis
 pip install -r requirements.txt
 python run_all.py
 ```

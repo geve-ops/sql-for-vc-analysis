@@ -1,5 +1,5 @@
 [project]
-name = "sql-learning-kit"
+name = "sql-for-vc-analysis"
 version = "1.0.0"
 description = "SQL for VC analysis: a case study and graded exercises on Greek deep-tech deal-flow data"
 requires-python = ">=3.10"
