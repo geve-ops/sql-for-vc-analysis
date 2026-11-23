@@ -45,65 +45,58 @@ flowchart TB
 
 ## Model lineage
 
-Which source tables each model reads, and which models each case study question uses. Read left to right.
+Which source tables and reference data each model reads. Read top to bottom.
 
 ```mermaid
-flowchart LR
+flowchart TB
     classDef src fill:#eef2f7,stroke:#8a98ab,color:#1c1d1f
     classDef ref fill:#f6f0e4,stroke:#b39661,color:#1c1d1f
     classDef mdl fill:#e3f1ea,stroke:#4f9a76,color:#1c1d1f
-    classDef out fill:#fdf0e8,stroke:#d0703e,color:#1c1d1f
 
-    companies[(companies)]:::src
-    watchlist[(watchlist)]:::src
-    scores[(scores)]:::src
-    signals[(signals)]:::src
-    ref_target_fund[/ref_target_fund/]:::ref
-    ref_pub[/ref_scores_first_published/]:::ref
-
-    dim_company[dim_company]:::mdl
-    bridge[bridge_company_fund]:::mdl
-    last_round[fct_last_round]:::mdl
-    fct_signal[fct_signal]:::mdl
-    weekly[fct_weekly_score]:::mdl
-    momentum[company_momentum]:::mdl
-    original[fct_weekly_score_original_rule]:::mdl
-
-    q1["Q1 Universe"]:::out
-    q2["Q2 Funds"]:::out
-    q3["Q3 Capital"]:::out
-    q4["Q4 EU grants"]:::out
-    q5["Q5 Momentum audit"]:::out
-    q6["Q6 Call list"]:::out
+    subgraph main["main schema (source tables)"]
+        companies[(companies)]:::src
+        watchlist[(watchlist)]:::src
+        scores[(scores)]:::src
+        signals[(signals)]:::src
+    end
+    subgraph seeds["seeds"]
+        ref_target_fund[/ref_target_fund/]:::ref
+        ref_pub[/ref_scores_first_published/]:::ref
+    end
+    subgraph analytics["analytics schema (models)"]
+        dim_company[dim_company]:::mdl
+        bridge[bridge_company_fund]:::mdl
+        last_round[fct_last_round]:::mdl
+        fct_signal[fct_signal]:::mdl
+        weekly[fct_weekly_score]:::mdl
+        momentum[company_momentum]:::mdl
+        original[fct_weekly_score_original_rule]:::mdl
+    end
 
     companies --> dim_company
     watchlist --> dim_company
+    companies --> last_round
     watchlist --> bridge
     ref_target_fund --> bridge
-    companies --> last_round
     signals --> fct_signal
     scores --> weekly
     weekly --> momentum
     dim_company --> momentum
     weekly --> original
     fct_signal --> original
-    ref_pub -. "checked by a data-quality rule" .-> original
-
-    dim_company --> q1
-    last_round --> q1
-    momentum --> q1
-    bridge --> q2
-    last_round --> q3
-    fct_signal --> q4
-    bridge --> q4
-    weekly --> q5
-    fct_signal --> q5
-    original --> q5
-    last_round --> q6
-    bridge --> q6
-    momentum --> q6
-    fct_signal --> q6
+    ref_pub -. "data-quality rule:<br/>must match row for row" .-> original
 ```
+
+Which models each case study question reads:
+
+| Question | `dim_company` | `fct_last_round` | `bridge_company_fund` | `fct_signal` | `fct_weekly_score` | `company_momentum` | `fct_weekly_score_original_rule` |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| [1. Universe and visibility](../case_study/README.md#1-where-is-the-universe-and-how-visible-is-it) | ● | ● | | | | ● | |
+| [2. Funds and co-investment](../case_study/README.md#2-which-greek-funds-lead-and-do-the-target-funds-co-invest) | ● | | ● | | | | |
+| [3. Recent capital](../case_study/README.md#3-how-is-recent-capital-spread) | ● | ● | | | | | |
+| [4. EU grants](../case_study/README.md#4-who-brings-in-eu-research-money) | ● | | ● | ● | | | |
+| [5. Momentum audit](../case_study/README.md#5-what-drives-momentum-and-can-the-ranking-be-trusted) | ● | | | ● | ● | | ● |
+| [6. Call list](../case_study/README.md#6-who-should-a-fund-call-this-month) | ● | ● | ● | ● | ● | ● | |
 
 ## Models
 
